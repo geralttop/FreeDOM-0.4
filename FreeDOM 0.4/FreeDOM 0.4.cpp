@@ -5,18 +5,25 @@
 #include <fstream>
 #include "User.h"
 #include "Lib.h"
+#include <Windows.h>
+#include <stdio.h>
+#include <conio.h>
 using namespace std;
+
 
 int main()
 {
-    setlocale(LC_ALL, "ru");
-    setlocale(LC_NUMERIC, "POSIX");
+    system("color 3");
+    SetConsoleTitle(L"FreeDOM");
+    //setlocale(LC_ALL, "ru");
+    //setlocale(LC_NUMERIC, "POSIX");
 
-    //записывает из файла в вектор данные о пользователе
-    vector<User> users = writingUsers();
-    
+    ////записывает из файла в вектор данные о пользователе
+    //vector<User> users = User::writingUsers();
 
-    int choose;
+    chooseWin();
+    /*int choose;
+    bool isUser;
 
     cout << "Выберите,как войти\n1. User\n2. Developer\n";
     cin >> choose;
@@ -25,22 +32,15 @@ int main()
     switch (choose)
     {
     case (1):
-        cout << "1. Войти\n2. Зарегестрироваться\n";
+        UsSignInUp(users);
         break;
+    case (2):
+        isUser = false;
         system("cls");
+        break;
     default:
         break;
-    }
-
-    checkingLoginData(users);
-    
-    
-
-
-
-
-    
-
-    
+    }*/
+    return 0;
 }
 
