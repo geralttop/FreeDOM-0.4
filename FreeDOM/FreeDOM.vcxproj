@@ -120,14 +120,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloWin.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="Lib1.cpp" />
     <ClCompile Include="RegestrationOfUser.cpp" />
     <ClCompile Include="RegOfDev.cpp" />
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloWin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Human.h" />
     <ClInclude Include="Lib1.h" />
     <ClInclude Include="RegestrationOfUser.h">
       <FileType>CppForm</FileType>
@@ -135,6 +138,7 @@
     <ClInclude Include="RegOfDev.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="HelloWin.resx">

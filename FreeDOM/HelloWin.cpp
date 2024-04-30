@@ -1,11 +1,12 @@
 #include "HelloWin.h"
 #include <string>
+#include "Lib1.h"
 //using namespace std;
 using namespace System;
 using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
-int main(array <String^>^ args) {
+int main() {
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::EnableVisualStyles();
 	FreeDOM::HelloWin form;
