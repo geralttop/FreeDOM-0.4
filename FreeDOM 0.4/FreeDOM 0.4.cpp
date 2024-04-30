@@ -13,37 +13,16 @@ using namespace std;
 
 int main()
 {
-    setlocale(0, "ru");
-    system("color 3");
-    SetConsoleTitle(L"FreeDOM");
-    system("mode con cols=49 lines=13");
+    // Чтоб нормально введеную кириллицу считывало
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    setlocale(0, "ru"); // Нормально отображение кириллицы
+    setlocale(LC_NUMERIC, "POSIX"); // Чтоб не округляло числа из файла
+
+    SetConsoleTitle(L"FreeDOM"); //Задает название консоли
     
-    //setlocale(LC_ALL, "ru");
-    //setlocale(LC_NUMERIC, "POSIX");
-
-    ////записывает из файла в вектор данные о пользователе
-    //vector<User> users = User::writingUsers();
-
-    firstWin();
-    /*int choose;
-    bool isUser;
-
-    cout << "Выберите,как войти\n1. User\n2. Developer\n";
-    cin >> choose;
-
-    system("cls");
-    switch (choose)
-    {
-    case (1):
-        UsSignInUp(users);
-        break;
-    case (2):
-        isUser = false;
-        system("cls");
-        break;
-    default:
-        break;
-    }*/
+    firstWin(); // Запускает первое окно программы
     return 0;
 }
 

@@ -7,6 +7,9 @@ string Human::getLogin() {
 string Human::getPass() {
 	return pass;
 }
+float Human::getBalance() {
+	return balance;
+}
 
 //setters
 void Human::setLogin(string log) {
@@ -14,4 +17,7 @@ void Human::setLogin(string log) {
 }
 void Human::setPass(string p) {
 	pass = p;
+}
+void Human::setBalance(float bal) {
+	balance = bal;
 }
