@@ -10,4 +10,6 @@ vector<User> writingUsers();
 void SignInUs(bool isUser);
 void SignInUp(bool isUser);
 void SignUpUs();
+void SignUpDev();
 void firstWin();
+void UsCabinet(User currentUser);

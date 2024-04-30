@@ -2,11 +2,12 @@
   FreeDOM 0.4.cpp
   Human.cpp
   Lib.cpp
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.7\FreeDOM 0.4\Lib.cpp(269,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.7\FreeDOM 0.4\Lib.cpp(635,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.8\FreeDOM 0.4\Lib.cpp(268,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.8\FreeDOM 0.4\Lib.cpp(829,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.8\FreeDOM 0.4\Lib.cpp(917,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   User.cpp
   Создание кода
   Previous IPDB not found, fall back to full compilation.
-  All 372 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 384 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Создание кода завершено
-  FreeDOM 0.4.vcxproj -> C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.7\x64\Release\FreeDOM 0.4.exe
+  FreeDOM 0.4.vcxproj -> C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.8\x64\Release\FreeDOM 0.4.exe

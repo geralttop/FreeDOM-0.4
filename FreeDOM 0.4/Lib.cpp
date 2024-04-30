@@ -178,8 +178,7 @@ void SignInUs(bool isUser) {
                 // Если логин найден, проверяем пароль
                 if (users[i].getPass() == signInPass) {
                     // Если пароль верный, выводим сообщение об успешном входе
-                    GoToXY(x, ++y);
-                    cout << "Вход выполнен успешно";
+                    UsCabinet(users[i]);
                 }
                 else {
                     // Если пароль неверный, выводим сообщение об ошибке и повторяем вход
@@ -291,7 +290,7 @@ void SignInUp(bool isUser) {
                 if (isUser)
                     SignUpUs();
                 else
-                    SignUpUs();
+                    SignUpDev();
                 return;
             case 2: // Возврат в предыдущее окно
                 system("cls");
@@ -453,6 +452,22 @@ bool validateLogin(const std::string& login) {
     return true;
 }
 
+bool validateCardNumber(const std::string& cardNumber) {
+    // Проверка на длину номера карты
+    if (cardNumber.length() != 16) {
+        return false;
+    }
+
+    // Проверка на то, что все символы - цифры
+    for (char ch : cardNumber) {
+        if (!isdigit(ch)) {
+            return false;
+        }
+    }
+
+    // Если номер карты прошел все проверки, возвращаем true
+    return true;
+}
 // Функция для регистрации нового пользователя
 void SignUpUs() {
     vector<User> users = writingUsers();
@@ -480,7 +495,7 @@ void SignUpUs() {
         SignUpUs();
         return;
     }
-
+    User currentUser;
     // Проверка наличия логина в базе пользователей
     for (auto& user : users) {
         if (signUpLogin == user.getLogin()) {
@@ -493,6 +508,7 @@ void SignUpUs() {
             SignUpUs();
             return;
         }
+        currentUser = user;
     }
 
     GoToXY(x, ++y);
@@ -564,7 +580,6 @@ void SignUpUs() {
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
         goto reppas;
-        return;
     }
 
     // Открытие файлов для записи данных пользователя
@@ -580,14 +595,281 @@ void SignUpUs() {
     ofUsBalance << std::endl << 0;
     ofUsPass << std::endl << signUpPass;
 
-    // Вывод сообщения об успешной регистрации
-    GoToXY(x, ++y);
-    std::cout << "Пользователь успешно зарегистрирован";
-
     // Закрытие файлов после записи данных
     ofUsLogin.close();
     ofUsBalance.close();
     ofUsPass.close();
+
+    // Вывод сообщения об успешной регистрации
+    UsCabinet(currentUser);
+
+    
+}
+
+void SignUpDev() {
+    vector<Dev> devs = writingDevs();
+
+    ConsoleCursorVisible(true, 100);
+
+    // Переменные для хранения логина, пароля и повторного ввода пароля
+    string signUpLogin;
+    string signUpPass;
+    string signUpRepitPass;
+    string signDevCardNum;
+
+    // Координаты для отображения текста в консоли
+    int x = 15, y = 5;
+    GoToXY(x, y);
+    cout << "Введите данные для регистрации";
+    GoToXY(x, ++y);
+
+    // Ввод логина пользователя
+    cout << "login: ";
+    getline(cin, signUpLogin);
+
+    // Валидация логина
+    if (!validateLogin(signUpLogin)) {
+        // Если логин не прошел валидацию, запрашиваем новый логин
+        SignUpDev();
+        return;
+    }
+
+    // Проверка наличия логина в базе пользователей
+    for (auto& dev : devs) {
+        if (signUpLogin == dev.getLogin()) {
+            // Если логин уже занят, выводим сообщение и запрашиваем новый логин
+            GoToXY(x, ++y);
+            std::cout << "Такой логин уже занят";
+            ConsoleCursorVisible(false, 100);
+            this_thread::sleep_for(std::chrono::milliseconds(1200));
+            system("cls");
+            SignUpDev();
+            return;
+        }
+    }
+
+    GoToXY(x, ++y);
+    cout << "CardNum: ";
+    while (true) {
+        getline(cin, signDevCardNum);
+        if (!validateCardNumber(signDevCardNum)) {
+            // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
+            GoToXY(x, ++y);
+            std::cout << "Некорректный номер карты";
+            ConsoleCursorVisible(false, 100);
+            this_thread::sleep_for(std::chrono::milliseconds(1200));
+            system("cls");
+            x = 15, y = 5;
+            GoToXY(x, y);
+            cout << "Введите данные для регистрации";
+            GoToXY(x, ++y);
+
+            // Ввод логина пользователя
+            cout << "login: " << signUpLogin;
+            GoToXY(x, ++y);
+
+            // Ввод пароля пользователя
+            cout << "CardNum: ";
+        }
+        else break;
+    }
+
+    GoToXY(x, ++y);
+    // Ввод пароля пользователя
+    cout << "pass: ";
+    char ch;
+    while (true) { // Бесконечный цикл для ввода пароля
+        signUpPass.clear(); // Очищаем переменную для пароля
+        while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
+            if (ch == '\b') { // Если нажата клавиша Backspace
+                if (!signUpPass.empty()) {
+                    signUpPass.pop_back(); // Удаляем последний символ
+                    cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
+                }
+            }
+            else {
+                signUpPass.push_back(ch); // Добавляем символ в пароль
+                cout << '*'; // Выводим звездочку вместо символа
+            }
+        }
+        cout << endl;
+
+        // Валидация пароля
+        if (validatePassword(signUpPass)) {
+            break; // Если пароль прошел валидацию, выходим из цикла
+        }
+        else {
+        reppas:
+            // Если пароль не прошел валидацию, выводим сообщение и просим ввести заново
+            system("cls");
+            x = 15, y = 5;
+            GoToXY(x, y);
+            cout << "Введите данные для регистрации";
+            GoToXY(x, ++y);
+
+            // Ввод логина пользователя
+            cout << "login: " << signUpLogin;
+            GoToXY(x, ++y);
+
+            //Ввовд номера карты
+            cout << "CardNum: " << signDevCardNum;
+            GoToXY(x, ++y);
+
+            // Ввод пароля пользователя
+            cout << "pass: ";
+        }
+    }
+
+    // Ввод повторного пароля пользователя
+    GoToXY(x, ++y);
+    std::cout << "repit pass: ";
+    signUpRepitPass.clear(); // Очищаем переменную для повторного ввода пароля
+    while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
+        if (ch == '\b') { // Если нажата клавиша Backspace
+            if (!signUpRepitPass.empty()) {
+                signUpRepitPass.pop_back(); // Удаляем последний символ
+                cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
+            }
+        }
+        else {
+            signUpRepitPass.push_back(ch); // Добавляем символ в пароль
+            cout << '*'; // Выводим звездочку вместо символа
+        }
+    }
+    cout << endl;
+
+    // Проверка соответствия паролей
+    if (signUpPass != signUpRepitPass) {
+        // Если пароли не совпадают, выводим сообщение и запрашиваем новый пароль
+        GoToXY(x, ++y);
+        std::cout << "Пароль неправильно повторен\n";
+        ConsoleCursorVisible(false, 100);
+        this_thread::sleep_for(std::chrono::milliseconds(1200));
+        goto reppas;
+        return;
+    }
+    
+    
+    // Открытие файлов для записи данных пользователя
+    std::ofstream ofDevLogin;
+    std::ofstream ofDevPass;
+    std::ofstream ofDevBalance;
+    std::ofstream ofDevCardNum;
+    ofDevLogin.open("Data/devNames.txt", std::ofstream::app);
+    ofDevBalance.open("Data/devBalances.txt", std::ofstream::app);
+    ofDevPass.open("Data/passOfDevs.txt", std::ofstream::app);
+    ofDevCardNum.open("Data/devCardNum.txt", std::ofstream::app);
+
+    // Запись данных пользователя в файлы
+    ofDevLogin << std::endl << signUpLogin;
+    ofDevBalance << std::endl << 0;
+    ofDevPass << std::endl << signUpPass;
+    ofDevCardNum << std::endl << signDevCardNum;
+
+    // Вывод сообщения об успешной регистрации
+    GoToXY(x, ++y);
+    std::cout << "Разработчик успешно зарегистрирован";
+
+    // Закрытие файлов после записи данных
+    ofDevLogin.close();
+    ofDevBalance.close();
+    ofDevPass.close();
+    ofDevCardNum.close();
+}
+
+void UsCabinet(User currentUser) {
+    ConsoleCursorVisible(false, 100);
+    system("cls");
+    system("mode con cols=49 lines=15");
+    /*int x = 10, y = 5;
+    GoToXY(x, y);
+    cout << "Ваш баланс:";
+    GoToXY(x, ++y);
+    cout << currentUser.getBalance();
+    GoToXY(x, ++y);
+    cout << "Ваше имя:";
+    GoToXY(x, ++y);
+    cout << currentUser.getLogin();*/
+    int x = 3, y = 1;
+    GoToXY(3, 1);
+    cout << "Ваше имя: " << currentUser.getLogin();
+    GoToXY(30, 1);
+    cout << "Ваш баланс: " << currentUser.getBalance();
+
+    string Menu[] = { "Пополнить баланс", "Список моих игр", "Поиск игр", "Выход на 1-ое окно", "Выход"};
+    int active_menu = 0;
+
+    // Переменная для чтения нажатых клавиш
+    char ch;
+
+    while (true) {
+        int x = 15, y = 5;
+        GoToXY(x, y);
+        // Цикл для отображения пунктов меню
+        for (int i = 0; i < size(Menu); i++) {
+            // Установка цвета текста в зависимости от активного пункта меню
+            if (i == active_menu) {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+            }
+            else {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
+            }
+            GoToXY(x, y++);
+            cout << Menu[i] << endl;
+        }
+        // Считывание нажатой клавиши
+        ch = _getch();
+        // Обработка нажатий стрелок для перемещения по меню
+        if (ch == -32) ch = _getch();
+        switch (ch) {
+        case 27: // ESC - выход из программы
+            exit(0);
+        case 72: // UP - перемещение вверх по меню
+            if (active_menu == 0) {
+                active_menu = size(Menu) - 1;
+            }
+            else if (active_menu > 0) {
+                --active_menu;
+            }
+            break;
+        case 80: // DOWN - перемещение вниз по меню
+            if (active_menu == size(Menu) - 1) {
+                active_menu = 0;
+            }
+            else if (active_menu < size(Menu) - 1) {
+                ++active_menu;
+            }
+            break;
+        case 13: // ENTER - выбор пункта меню
+            switch (active_menu) {
+            case 0:
+                
+                //balance
+            case 1: // Вход как пользователь
+                system("cls");
+                return;
+            case 2: // Вход как разработчик (не реализовано)
+                system("cls");
+                return;
+            case 3: // Выход из программы
+                system("cls");
+                firstWin();
+                return;
+            case 4:
+                exit(0);
+                return;
+            }
+            break;
+        case 32: // SPACE - вывод информации о разработчике и выход из меню
+            system("cls");
+            cout << "Эта великолепнейшая программа разработана величайшим Тимофеем Солдатенковым, с которым вы можете связаться через тг: @geralttop. В инсте, по идее, также. Хотелось бы сказать спасибо за помощь в разработке моим друзьям: Бордюру, Даниилу, МегаВане315. Спасибо Хидео Кодзиме за то, что он создал великолепнейшую игру, продолжение которой я очень жду. Спасибо моей бро Протасене (ударение на первое е. И мою бро зовут Полина, моя одноклассница, которая помогала мне в школе, которая заставила меня задуматься о современной молодежной моде и лицемерии. Спасибо Автору и левым за идеи, которые вложили в меня, и которые я вложил в этот проект.";
+            _getch();
+            system("cls");
+            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
+            return;
+        }
+    }
+    _getch();
 }
 // Первое окно программы
 void firstWin() {
