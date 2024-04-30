@@ -13,15 +13,18 @@ using namespace std;
 
 int main()
 {
+    setlocale(0, "ru");
     system("color 3");
     SetConsoleTitle(L"FreeDOM");
+    system("mode con cols=49 lines=13");
+    
     //setlocale(LC_ALL, "ru");
     //setlocale(LC_NUMERIC, "POSIX");
 
     ////записывает из файла в вектор данные о пользователе
     //vector<User> users = User::writingUsers();
 
-    chooseWin();
+    firstWin();
     /*int choose;
     bool isUser;
 

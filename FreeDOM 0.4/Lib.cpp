@@ -1,8 +1,15 @@
-#include "Lib.h"
-#include <fstream>
 #include <iostream>
 #include <string>
-#include <cctype>
+#include <vector>
+#include <stdlib.h>
+#include <fstream>
+#include "User.h"
+#include "Lib.h"
+#include <Windows.h>
+#include <stdio.h>
+#include <conio.h>
+
+using namespace std;
 
 //записывает из файла в вектор данные о пользователе
 vector<User> writingUsers()
@@ -225,14 +232,77 @@ void SignInUs(std::vector<User> users) {
     ofUsPass.close();
 }
 
+HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE); // Получаем дескриптор консоли
+// Текстовый курсор в точку x,y 
+void GoToXY(short x, short y)
+{
+    SetConsoleCursorPosition(hStdOut, { x, y });
+}
 
-void chooseWin() {
-    cout <<"******************************************************\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n"
-        << "*\t                                             *\n";
+void ConsoleCursorVisible(bool show, short size)
+{
+    CONSOLE_CURSOR_INFO structCursorInfo;
+    GetConsoleCursorInfo(hStdOut, &structCursorInfo);
+    structCursorInfo.bVisible = show; // изменяем видимость курсора
+    structCursorInfo.dwSize = size;   // изменяем размер курсора
+    SetConsoleCursorInfo(hStdOut, &structCursorInfo);
+}
+
+
+void firstWin() {
+    ConsoleCursorVisible(false, 100);
+
+    string Menu[] = {"Как User", "Как Developer"};
+    int active_menu = 0;
+
+    
+    bool T = true;
+    char ch;
+    while (T)
+    {
+        int x = 15, y = 5;
+        GoToXY(x, y);
+
+        for (int i = 0; i < size(Menu); i++)
+        {
+            if (i == active_menu) 	SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+            else 	SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+            GoToXY(x, y++);
+            cout << Menu[i] << endl;
+        }
+        ch = _getch();
+        if (ch == -32) ch = _getch(); // Отлавливаем стрелочки
+        switch (ch)
+        {
+        case 27:
+            exit(0);
+        case 72:
+            if (active_menu > 0)
+                --active_menu;
+            break;
+        case 80:
+            if (active_menu < size(Menu) - 1)
+                ++active_menu;
+            break;
+        case 13:
+            switch (active_menu)
+            {
+            case 0:
+                system("CLS");
+                GoToXY(x, y);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+                cout << "Пользователь выбрал \"" << Menu[active_menu] << "\"";
+                _getch();
+                system("CLS");
+                break;
+            case 1:
+                system("cls");
+                cout << "Вход или регистрация как девелопера";
+                break;
+            }
+            break;
+            
+        }
+    }
+    _getch();
 }
