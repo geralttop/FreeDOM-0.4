@@ -13,3 +13,4 @@ void SignUpUs();
 void SignUpDev();
 void firstWin();
 void UsCabinet(User currentUser);
+void topUp(User currentBalance);

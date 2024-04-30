@@ -30,6 +30,7 @@ vector<User> writingUsers() {
 
     // Цикл считывания данных из файлов и записи их в объекты пользователя
     // Цикл продолжается, пока не достигнут конец файла (eof) для ifUsLogin
+    int i = 0;
     while (!ifUsLogin.eof()) {
         // Переменные для хранения данных пользователя
         string login;
@@ -45,7 +46,8 @@ vector<User> writingUsers() {
         float fbalance = stof(balance);
 
         // Создание объекта пользователя с прочитанными данными и добавление его в вектор
-        users.push_back(User(login, pass, fbalance));
+        users.push_back(User(login, pass, fbalance, i));
+        i++;
     }
 
     // Закрытие файлов после считывания данных
@@ -508,7 +510,6 @@ void SignUpUs() {
             SignUpUs();
             return;
         }
-        currentUser = user;
     }
 
     GoToXY(x, ++y);
@@ -581,7 +582,7 @@ void SignUpUs() {
         this_thread::sleep_for(std::chrono::milliseconds(1200));
         goto reppas;
     }
-
+    users.push_back(User(signUpLogin, signUpPass, 0, users.size()));
     // Открытие файлов для записи данных пользователя
     std::ofstream ofUsLogin;
     std::ofstream ofUsPass;
@@ -601,7 +602,7 @@ void SignUpUs() {
     ofUsPass.close();
 
     // Вывод сообщения об успешной регистрации
-    UsCabinet(currentUser);
+    UsCabinet(users[users.size()-1]);
 
     
 }
@@ -777,6 +778,55 @@ void SignUpDev() {
     ofDevCardNum.close();
 }
 
+void topUp(User currentUser) {
+    system("cls");
+    int x = 10, y = 5;
+    GoToXY(x, y);
+
+    string addBalance;
+    string cardNum;
+    cout << "Введите сумму, которую хотите добавить";
+    GoToXY(x, ++y);
+    getline(cin, addBalance);
+    GoToXY(x, ++y);
+
+    cout << "CardNum: ";
+    while (true) {
+        getline(cin, cardNum);
+        if (!validateCardNumber(cardNum)) {
+            // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
+            GoToXY(x, ++y);
+            std::cout << "Некорректный номер карты";
+            ConsoleCursorVisible(false, 100);
+            this_thread::sleep_for(std::chrono::milliseconds(1200));
+            system("cls");
+            x = 10, y = 5;
+            GoToXY(x, y);
+            cout << "Введите сумму, которую хотите добавить";
+            GoToXY(x, ++y);
+            cout << addBalance;
+            // Ввод логина пользователя
+            GoToXY(x, ++y);
+            cout << "CardNum: ";
+        }
+        else break;
+    }
+    
+    float faddBalance = stof(addBalance);
+    currentUser.setBalance(currentUser.getBalance() + faddBalance);
+    vector<User> users = writingUsers();
+    users[currentUser.getIndex()].setBalance(currentUser.getBalance());
+    ofstream ofUsBalance;
+    ofUsBalance.open("Data/userBalances.txt");
+    ofUsBalance << users[0].getBalance();
+    for (int i = 1; i < users.size(); i++) {
+        ofUsBalance << endl << users[i].getBalance();
+    }
+    ofUsBalance.close();
+    UsCabinet(currentUser);
+    return;
+}
+
 void UsCabinet(User currentUser) {
     ConsoleCursorVisible(false, 100);
     system("cls");
@@ -843,7 +893,8 @@ void UsCabinet(User currentUser) {
         case 13: // ENTER - выбор пункта меню
             switch (active_menu) {
             case 0:
-                
+                topUp(currentUser);
+                return;
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
@@ -882,7 +933,7 @@ void firstWin() {
     string Menu[] = { "Войти как", "User", "Developer", "Выход" };
 
     // Переменная для отслеживания активного пункта меню
-    int active_menu = 0;
+    int active_menu = 1;
 
     // Переменная для чтения нажатых клавиш
     char ch;
@@ -890,11 +941,14 @@ void firstWin() {
     bool isUser;
 
     // Бесконечный цикл для отображения меню и обработки ввода пользователя
+    GoToXY(15, 5);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+    cout << Menu[0];
     while (true) {
-        int x = 15, y = 5;
+        int x = 15, y = 6;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
-        for (int i = 0; i < size(Menu); i++) {
+        for (int i = 1; i < size(Menu); i++) {
             // Установка цвета текста в зависимости от активного пункта меню
             if (i == active_menu) {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);

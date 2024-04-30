@@ -10,6 +10,9 @@ string Human::getPass() {
 float Human::getBalance() {
 	return balance;
 }
+int Human::getIndex() {
+	return index;
+}
 
 //setters
 void Human::setLogin(string log) {

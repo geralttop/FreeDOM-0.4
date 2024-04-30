@@ -10,11 +10,13 @@ protected:
 	string login;
 	string pass;
 	float balance;
+	int index;
 public:
 	//getters
 	string getLogin();
 	string getPass();
 	float getBalance();
+	int getIndex();
 
 	//setters
 	void setLogin(string log);
