@@ -11,7 +11,13 @@ void test()
 
 vector<User> ttt() {
 	vector<User> users;
-	users.push_back(User("Tima", "1234", 23.5));
-	cout << users[0].getLogin();
+	ifstream fin;
+	fin.open("DataUsers");
+	
+	while (fin.read((char*)&users[0], sizeof(User))) {
+		cout << users[0].getLogin() << users[0].getPass() << users[0].getBalance();
+	}
+	
+	fin.close();
 	return users;
 }

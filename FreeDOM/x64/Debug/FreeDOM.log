@@ -1,3 +1,7 @@
 ﻿  HelloWin.cpp
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\RegestrationOfUser.h(191,10): warning C4305: инициализация: усечение из "double" в "float"
+  RegestrationOfUser.cpp
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\RegestrationOfUser.h(191,10): warning C4305: инициализация: усечение из "double" в "float"
+  Создание кода...
   HelloWin.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
-  FreeDOM.vcxproj -> C:\Users\виктор\Desktop\FreeDOM 0.1\x64\Debug\FreeDOM.exe
+  FreeDOM.vcxproj -> C:\Users\виктор\Desktop\FreeDOM 0.3\x64\Debug\FreeDOM.exe

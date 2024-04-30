@@ -119,15 +119,18 @@ namespace FreeDOM {
 		}
 #pragma endregion
 	private: System::Void HelloWin_Load(System::Object^ sender, System::EventArgs^ e) {
+
 	}
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	}
 	private: System::Void UserReg_Click(System::Object^ sender, System::EventArgs^ e) {
 		RegestrationOfUser^ usWin = gcnew RegestrationOfUser();
+		//usWin->users = ttt();
 		usWin->Show();
 		this->Hide();
 		test();
+		
 	}
 	private: System::Void DevReg_Click(System::Object^ sender, System::EventArgs^ e) {
 		RegOfDev^ devWin = gcnew RegOfDev();

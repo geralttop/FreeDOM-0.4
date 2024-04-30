@@ -1,5 +1,9 @@
 #pragma once
 #include "Lib1.h"
+#include "User.h"
+#include <vector>
+#include <vcclr.h>
+#include <string>
 namespace FreeDOM {
 
 	using namespace System;
@@ -14,6 +18,8 @@ namespace FreeDOM {
 	/// </summary>
 	public ref class RegestrationOfUser : public System::Windows::Forms::Form
 	{
+	public:
+		User* users = new User[10000];
 	public:
 		RegestrationOfUser(void)
 		{
@@ -180,7 +186,12 @@ namespace FreeDOM {
 	private: System::Void RegestrationOfUser_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void usSignIn_Click(System::Object^ sender, System::EventArgs^ e) {
-	ttt();
+	//ttt();
+	cout << sizeof(User);
+	float a = 12.2;
+	users[0] = User("qwe", "123", a);
+
+	cout << users[0].getLogin() << endl << users[0].getBalance();
 }
 };
 }

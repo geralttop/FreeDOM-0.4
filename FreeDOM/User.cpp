@@ -7,6 +7,9 @@ User::User(string log, string p, float bal) {
 	pass = p;
 	balance = bal;
 }
+User::User() {
+
+}
 float User::getBalance() {
 	return balance;
 }

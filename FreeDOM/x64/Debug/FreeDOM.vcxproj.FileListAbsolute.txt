@@ -6,3 +6,7 @@ C:\Users\виктор\Desktop\FreeDOM 0.1\FreeDOM\x64\Debug\FreeDOM.vcxproj.Asse
 C:\Users\виктор\Desktop\FreeDOM 0.1\FreeDOM\x64\Debug\FreeDOM.HelloWin.resources
 C:\Users\виктор\Desktop\FreeDOM 0.1\FreeDOM\x64\Debug\FreeDOM.RegestrationOfUser.resources
 C:\Users\виктор\Desktop\FreeDOM 0.1\FreeDOM\x64\Debug\FreeDOM.vcxproj.GenerateResource.cache
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\x64\Debug\FreeDOM.vcxproj.AssemblyReference.cache
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\x64\Debug\FreeDOM.HelloWin.resources
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\x64\Debug\FreeDOM.RegestrationOfUser.resources
+C:\Users\виктор\Desktop\FreeDOM 0.3\FreeDOM\x64\Debug\FreeDOM.vcxproj.GenerateResource.cache
