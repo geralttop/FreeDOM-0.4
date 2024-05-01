@@ -13,6 +13,7 @@ using namespace std;
 
 int main()
 {
+    //Тестовые изменения
     // Чтоб нормально введеную кириллицу считывало
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
