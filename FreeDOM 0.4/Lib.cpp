@@ -136,36 +136,43 @@ void ConsoleCursorVisible(bool show, short size) {
 //Все, что надо было для крутого меню закончилось, не считая моего профессионализма
 
 void bankRequest() {
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     ConsoleCursorVisible(false, 100);
     system("cls");
     GoToXY(15, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(18, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(21, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(24, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     system("cls");
     GoToXY(27, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     GoToXY(30, 1);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(33, 2);
     cout << "|";
@@ -175,6 +182,7 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(33, 5);
     cout << "|";
@@ -184,6 +192,7 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     system("cls");
     GoToXY(33, 8);
     cout << "|";
@@ -193,34 +202,41 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     GoToXY(30, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(27, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(24, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     system("cls");
     GoToXY(21, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(18, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     GoToXY(15, 11);
     cout << "___";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(15, 10);
     cout << "|";
@@ -230,6 +246,7 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     system("cls");
     GoToXY(15, 7);
     cout << "|";
@@ -239,6 +256,7 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
     system("cls");
     GoToXY(15, 4);
     cout << "|";
@@ -248,6 +266,7 @@ void bankRequest() {
     cout << "|";
     this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(14, 7);
     cout << "Банк одобрил операцию";
@@ -269,18 +288,22 @@ void SignInUs(bool isUser) {
     // Координаты для отображения текста в консоли
     int x = 15, y = 5;
     GoToXY(x, y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите логин и пароль";
     GoToXY(x, ++y);
 
     // Ввод логина пользователя
     std::cout << "login: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     std::getline(std::cin, signInLogin);
 
     // Ввод пароля пользователя
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     std::cout << "pass: ";
     char ch;
-    while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
+    while ((ch = _getch()) != '\r') {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
         if (ch == '\b') { // Если нажата клавиша Backspace
             if (!signInPass.empty()) {
                 signInPass.pop_back(); // Удаляем последний символ
@@ -306,6 +329,7 @@ void SignInUs(bool isUser) {
                 else {
                     // Если пароль неверный, выводим сообщение об ошибке и повторяем вход
                     GoToXY(x, ++y);
+                    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
                     cout << "Введён неправильный пароль или логин";
                     this_thread::sleep_for(std::chrono::milliseconds(1200));
                     system("cls");
@@ -328,6 +352,7 @@ void SignInUs(bool isUser) {
                 else {
                     // Если пароль неверный, выводим сообщение об ошибке и повторяем вход
                     GoToXY(x, ++y);
+                    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
                     cout << "Введён неправильный пароль или логин";
                     this_thread::sleep_for(std::chrono::milliseconds(1200));
                     system("cls");
@@ -343,6 +368,7 @@ void SignInUs(bool isUser) {
 
     // Если логин не найден, выводим сообщение об ошибке и повторяем вход
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введен неправильный пароль или логин\n";
     this_thread::sleep_for(std::chrono::milliseconds(1200));
     system("cls");
@@ -370,10 +396,10 @@ void SignInUp(bool isUser) {
         for (int i = 0; i < size(Menu); i++) {
             // Установка цвета текста в зависимости от активного пункта меню
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
             }
             else {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
             }
             GoToXY(x, y++);
             cout << Menu[i] << endl;
@@ -435,6 +461,7 @@ bool validatePassword(const std::string& password) {
     if (password.length() < 8) {
         // Перемещение курсора в консоли и вывод сообщения об ошибке
         GoToXY(15, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать не менее 8 символов.";
         // Скрытие курсора и задержка перед очисткой экрана
         ConsoleCursorVisible(false, 100);
@@ -465,6 +492,7 @@ bool validatePassword(const std::string& password) {
         else if (!isascii(c)) {
             // Проверка на кириллические символы
             GoToXY(15, 8);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Пароль не должен содержать кириллических символов.";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -476,6 +504,7 @@ bool validatePassword(const std::string& password) {
     // Проверка наличия пробелов
     if (hasSpace) {
         GoToXY(15, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль не должен содержать пробелов.";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -486,6 +515,7 @@ bool validatePassword(const std::string& password) {
     // Проверка наличия строчных букв
     if (!hasLowercase) {
         GoToXY(15, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну строчную букву.";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -496,6 +526,7 @@ bool validatePassword(const std::string& password) {
     // Проверка наличия прописных букв
     if (!hasUppercase) {
         GoToXY(15, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну заглавную букву.";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -506,6 +537,7 @@ bool validatePassword(const std::string& password) {
     // Проверка наличия цифр
     if (!hasDigit) {
         GoToXY(15, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну цифру.";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -523,6 +555,7 @@ bool validateLogin(const std::string& login) {
     if (login.length() < 6) {
         // Перемещение курсора в консоли и вывод сообщения об ошибке
         GoToXY(15, 7);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Длина логина должна быть не менее 6 символов.\n";
         // Скрытие курсора и задержка перед очисткой экрана
         ConsoleCursorVisible(false, 100);
@@ -541,6 +574,7 @@ bool validateLogin(const std::string& login) {
         // Проверка на кириллические символы
         if (!isascii(c)) {
             GoToXY(15, 7);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Логин не должен содержать кириллические символы.\n";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -551,6 +585,7 @@ bool validateLogin(const std::string& login) {
     // Проверка наличия буквы в логине
     if (!hasLetter) {
         GoToXY(15, 7);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Логин должен содержать хотя бы одну букву.\n";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -563,6 +598,7 @@ bool validateLogin(const std::string& login) {
         // Проверка на пробельный символ
         if (isspace(static_cast<unsigned char>(c))) {
             GoToXY(15, 7);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Логин не должен содержать пробелы.\n";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -604,11 +640,13 @@ void SignUpUs() {
     // Координаты для отображения текста в консоли
     int x = 15, y = 5;
     GoToXY(x, y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите данные для регистрации";
     GoToXY(x, ++y);
 
     // Ввод логина пользователя
     cout << "login: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, signUpLogin);
 
     // Валидация логина
@@ -623,6 +661,7 @@ void SignUpUs() {
         if (signUpLogin == user.getLogin()) {
             // Если логин уже занят, выводим сообщение и запрашиваем новый логин
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Такой логин уже занят";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -635,9 +674,11 @@ void SignUpUs() {
     GoToXY(x, ++y);
 
     // Ввод пароля пользователя
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "pass: ";
     char ch;
-    while (true) { // Бесконечный цикл для ввода пароля
+    while (true) {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Бесконечный цикл для ввода пароля
         signUpPass.clear(); // Очищаем переменную для пароля
         while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
             if (ch == '\b') { // Если нажата клавиша Backspace
@@ -663,23 +704,29 @@ void SignUpUs() {
             system("cls");
             x = 15, y = 5;
             GoToXY(x, y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "Введите данные для регистрации";
             GoToXY(x, ++y);
 
             // Ввод логина пользователя
-            cout << "login: " << signUpLogin;
+            cout << "login: "; 
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+            cout << signUpLogin;
             GoToXY(x, ++y);
 
             // Ввод пароля пользователя
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "pass: ";
         }
     }
 
     // Ввод повторного пароля пользователя
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     std::cout << "repit pass: ";
     signUpRepitPass.clear(); // Очищаем переменную для повторного ввода пароля
-    while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
+    while ((ch = _getch()) != '\r') {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
         if (ch == '\b') { // Если нажата клавиша Backspace
             if (!signUpRepitPass.empty()) {
                 signUpRepitPass.pop_back(); // Удаляем последний символ
@@ -697,6 +744,7 @@ void SignUpUs() {
     if (signUpPass != signUpRepitPass) {
         // Если пароли не совпадают, выводим сообщение и запрашиваем новый пароль
         GoToXY(x, ++y);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль неправильно повторен\n";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -741,11 +789,13 @@ void SignUpDev() {
     // Координаты для отображения текста в консоли
     int x = 15, y = 5;
     GoToXY(x, y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите данные для регистрации";
     GoToXY(x, ++y);
 
     // Ввод логина пользователя
     cout << "login: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, signUpLogin);
 
     // Валидация логина
@@ -760,6 +810,7 @@ void SignUpDev() {
         if (signUpLogin == dev.getLogin()) {
             // Если логин уже занят, выводим сообщение и запрашиваем новый логин
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Такой логин уже занят";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -770,12 +821,15 @@ void SignUpDev() {
     }
 
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "CardNum: ";
     while (true) {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         getline(cin, signDevCardNum);
         if (!validateCardNumber(signDevCardNum)) {
             // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Некорректный номер карты";
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -786,10 +840,14 @@ void SignUpDev() {
             GoToXY(x, ++y);
 
             // Ввод логина пользователя
-            cout << "login: " << signUpLogin;
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+            cout << "login: ";
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+            cout << signUpLogin;
             GoToXY(x, ++y);
 
             // Ввод пароля пользователя
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "CardNum: ";
         }
         else break;
@@ -797,9 +855,12 @@ void SignUpDev() {
 
     GoToXY(x, ++y);
     // Ввод пароля пользователя
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "pass: ";
+    
     char ch;
     while (true) { // Бесконечный цикл для ввода пароля
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         signUpPass.clear(); // Очищаем переменную для пароля
         while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
             if (ch == '\b') { // Если нажата клавиша Backspace
@@ -820,30 +881,40 @@ void SignUpDev() {
             break; // Если пароль прошел валидацию, выходим из цикла
         }
         else {
-        reppas:
+        reppasdev:
             // Если пароль не прошел валидацию, выводим сообщение и просим ввести заново
             system("cls");
             x = 15, y = 5;
             GoToXY(x, y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "Введите данные для регистрации";
             GoToXY(x, ++y);
 
             // Ввод логина пользователя
-            cout << "login: " << signUpLogin;
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+            cout << "login: ";
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+            cout << signUpLogin;
             GoToXY(x, ++y);
 
             //Ввовд номера карты
-            cout << "CardNum: " << signDevCardNum;
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+            cout << "CardNum: ";
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+            cout << signDevCardNum;
             GoToXY(x, ++y);
 
             // Ввод пароля пользователя
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "pass: ";
         }
     }
 
     // Ввод повторного пароля пользователя
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     std::cout << "repit pass: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signUpRepitPass.clear(); // Очищаем переменную для повторного ввода пароля
     while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
         if (ch == '\b') { // Если нажата клавиша Backspace
@@ -863,10 +934,11 @@ void SignUpDev() {
     if (signUpPass != signUpRepitPass) {
         // Если пароли не совпадают, выводим сообщение и запрашиваем новый пароль
         GoToXY(x, ++y);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль неправильно повторен\n";
         ConsoleCursorVisible(false, 100);
         this_thread::sleep_for(std::chrono::milliseconds(1200));
-        goto reppas;
+        goto reppasdev;
         return;
     }
     
@@ -888,14 +960,15 @@ void SignUpDev() {
     ofDevCardNum << std::endl << signDevCardNum;
 
     // Вывод сообщения об успешной регистрации
-    GoToXY(x, ++y);
-    std::cout << "Разработчик успешно зарегистрирован";
+    devs.push_back(Dev(signUpLogin, signUpPass, 0, signDevCardNum, devs.size()));
 
     // Закрытие файлов после записи данных
     ofDevLogin.close();
     ofDevBalance.close();
     ofDevPass.close();
     ofDevCardNum.close();
+
+    DevCabinet(devs[devs.size() - 1]);
 }
 
 void topUp(User currentUser) {
@@ -905,14 +978,19 @@ void topUp(User currentUser) {
 
     string addBalance;
     string cardNum;
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите сумму, которую хотите добавить";
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, addBalance);
     GoToXY(x, ++y);
 
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "CardNum: ";
     while (true) {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         getline(cin, cardNum);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         if (!validateCardNumber(cardNum)) {
             // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
             GoToXY(x, ++y);
@@ -924,9 +1002,11 @@ void topUp(User currentUser) {
             GoToXY(x, y);
             cout << "Введите сумму, которую хотите добавить";
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << addBalance;
             // Ввод логина пользователя
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "CardNum: ";
         }
         else break;
@@ -948,6 +1028,7 @@ void topUp(User currentUser) {
     UsCabinet(currentUser);
     return;
 }
+
 void writeOff(Dev currenDev) {
     vector<Dev> devs = writingDevs();
     currenDev.setBalance(0);
@@ -977,6 +1058,7 @@ void UsCabinet(User currentUser) {
     cout << "Ваше имя:";
     GoToXY(x, ++y);
     cout << currentUser.getLogin();*/
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     int x = 3, y = 1;
     GoToXY(3, 1);
     cout << "Ваше имя: " << currentUser.getLogin();
@@ -1064,6 +1146,7 @@ void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
     int x = 3, y = 1;
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     GoToXY(3, 1);
     cout << "Ваша назва: " << currentDev.getLogin();
     GoToXY(30, 1);
@@ -1147,6 +1230,8 @@ void DevCabinet(Dev currentDev) {
     _getch();
     return;
 }
+
+
 // Первое окно программы
 void firstWin() {
     // Устанавливает размер окна консоли
