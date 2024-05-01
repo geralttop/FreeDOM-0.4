@@ -1,14 +1,16 @@
-﻿  Dev.cpp
-  FreeDOM 0.4.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Release\) содержит файлы, которые используются совместно с другим проектом (FreeDOM 0.4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  Dev.cpp
+  FreeDOM.cpp
   Human.cpp
   Lib.cpp
-C:\Users\виктор\Desktop\FreeDOM 0.9\FreeDOM 0.4\Lib.cpp(270,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\Desktop\FreeDOM 0.9\FreeDOM 0.4\Lib.cpp(585,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\Desktop\FreeDOM 0.9\FreeDOM 0.4\Lib.cpp(879,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\Desktop\FreeDOM 0.9\FreeDOM 0.4\Lib.cpp(971,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\FreeDOM 0.4\Lib.cpp(390,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\FreeDOM 0.4\Lib.cpp(705,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\FreeDOM 0.4\Lib.cpp(1016,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\FreeDOM 0.4\Lib.cpp(1102,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\FreeDOM 0.4\Lib.cpp(1196,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   User.cpp
   Создание кода
   Previous IPDB not found, fall back to full compilation.
-  All 385 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 389 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Создание кода завершено
-  FreeDOM 0.4.vcxproj -> C:\Users\виктор\Desktop\FreeDOM 0.9\x64\Release\FreeDOM 0.4.exe
+  FreeDOM 0.4.vcxproj -> C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM\x64\Release\FreeDOM.exe

@@ -22,8 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6b01a0ef-b063-4b53-af9c-34eb997e11e2}</ProjectGuid>
-    <RootNamespace>FreeDOM04</RootNamespace>
+    <RootNamespace>FreeDOM</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>FreeDOM</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -128,7 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dev.cpp" />
-    <ClCompile Include="FreeDOM 0.4.cpp" />
+    <ClCompile Include="FreeDOM.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Lib.cpp" />
     <ClCompile Include="User.cpp" />

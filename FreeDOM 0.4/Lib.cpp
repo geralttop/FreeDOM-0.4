@@ -15,6 +15,7 @@
 
 using namespace std;
 
+
 // Функция для чтения пользователей из файлов и записи их в вектор
 vector<User> writingUsers() {
     // Создание вектора пользователей
@@ -75,6 +76,7 @@ vector<Dev> writingDevs() {
 
     // Цикл считывания данных из файлов и записи их в объекты разработчика
     // Цикл продолжается, пока не достигнут конец файла (eof) для ifDevLogin
+    int i = 0;
     while (!ifDevLogin.eof()) {
         // Переменные для хранения данных разработчика
         std::string login;
@@ -92,7 +94,8 @@ vector<Dev> writingDevs() {
         float fbalance = std::stof(balance);
 
         // Создание объекта разработчика с прочитанными данными и добавление его в вектор
-        devs.push_back(Dev(login, pass, fbalance, cardNum));
+        devs.push_back(Dev(login, pass, fbalance, cardNum , i));
+        i++;
     }
 
     // Закрытие файлов после считывания данных
@@ -132,7 +135,125 @@ void ConsoleCursorVisible(bool show, short size) {
 }
 //Все, что надо было для крутого меню закончилось, не считая моего профессионализма
 
+void bankRequest() {
+    ConsoleCursorVisible(false, 100);
+    system("cls");
+    GoToXY(15, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
 
+    system("cls");
+    GoToXY(18, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(21, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(24, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(27, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    GoToXY(30, 1);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(33, 2);
+    cout << "|";
+    GoToXY(33, 3);
+    cout << "|";
+    GoToXY(33, 4);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(33, 5);
+    cout << "|";
+    GoToXY(33, 6);
+    cout << "|";
+    GoToXY(33, 7);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(33, 8);
+    cout << "|";
+    GoToXY(33, 9);
+    cout << "|";
+    GoToXY(33, 10);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    GoToXY(30, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(27, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(24, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(21, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(18, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    GoToXY(15, 11);
+    cout << "___";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(15, 10);
+    cout << "|";
+    GoToXY(15, 9);
+    cout << "|";
+    GoToXY(15, 8);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(15, 7);
+    cout << "|";
+    GoToXY(15, 6);
+    cout << "|";
+    GoToXY(15, 5);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(15, 4);
+    cout << "|";
+    GoToXY(15, 3);
+    cout << "|";
+    GoToXY(15, 2);
+    cout << "|";
+    this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    system("cls");
+    GoToXY(14, 7);
+    cout << "Банк одобрил операцию";
+    this_thread::sleep_for(std::chrono::milliseconds(1200));
+    system("cls");
+}
 // Функция для входа пользователя в систему
 void SignInUs(bool isUser) {
     // Отображение курсора в консоли и его видимость
@@ -202,8 +323,7 @@ void SignInUs(bool isUser) {
                 // Если логин найден, проверяем пароль
                 if (devs[i].getPass() == signInPass) {
                     // Если пароль верный, выводим сообщение об успешном входе
-                    GoToXY(x, ++y);
-                    cout << "Вход выполнен успешно";
+                    DevCabinet(devs[i]);
                 }
                 else {
                     // Если пароль неверный, выводим сообщение об ошибке и повторяем вход
@@ -823,7 +943,24 @@ void topUp(User currentUser) {
         ofUsBalance << endl << users[i].getBalance();
     }
     ofUsBalance.close();
+    bankRequest();
+
     UsCabinet(currentUser);
+    return;
+}
+void writeOff(Dev currenDev) {
+    vector<Dev> devs = writingDevs();
+    currenDev.setBalance(0);
+    devs[currenDev.getIndex()].setBalance(currenDev.getBalance());
+    
+    ofstream ofDevBalance;
+    ofDevBalance.open("Data/devBalances.txt");
+    ofDevBalance << devs[0].getBalance();
+    for (int i = 1; i < devs.size(); i++) {
+        ofDevBalance << endl << devs[i].getBalance();
+    }
+
+    DevCabinet(currenDev);
     return;
 }
 
@@ -921,6 +1058,94 @@ void UsCabinet(User currentUser) {
         }
     }
     _getch();
+}
+
+void DevCabinet(Dev currentDev) {
+    ConsoleCursorVisible(false, 100);
+    system("cls");
+    int x = 3, y = 1;
+    GoToXY(3, 1);
+    cout << "Ваша назва: " << currentDev.getLogin();
+    GoToXY(30, 1);
+    cout << "Ваш баланс: " << currentDev.getBalance();
+
+    string Menu[] = { "Списать деньги на карту", "Список моих игр", "Добавить игру", "Выход на 1-ое окно", "Выход" };
+    int active_menu = 0;
+
+    // Переменная для чтения нажатых клавиш
+    char ch;
+
+    while (true) {
+        int x = 15, y = 5;
+        GoToXY(x, y);
+        // Цикл для отображения пунктов меню
+        for (int i = 0; i < size(Menu); i++) {
+            // Установка цвета текста в зависимости от активного пункта меню
+            if (i == active_menu) {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+            }
+            else {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
+            }
+            GoToXY(x, y++);
+            cout << Menu[i] << endl;
+        }
+        // Считывание нажатой клавиши
+        ch = _getch();
+        // Обработка нажатий стрелок для перемещения по меню
+        if (ch == -32) ch = _getch();
+        switch (ch) {
+        case 27: // ESC - выход из программы
+            exit(0);
+        case 72: // UP - перемещение вверх по меню
+            if (active_menu == 0) {
+                active_menu = size(Menu) - 1;
+            }
+            else if (active_menu > 0) {
+                --active_menu;
+            }
+            break;
+        case 80: // DOWN - перемещение вниз по меню
+            if (active_menu == size(Menu) - 1) {
+                active_menu = 0;
+            }
+            else if (active_menu < size(Menu) - 1) {
+                ++active_menu;
+            }
+            break;
+        case 13: // ENTER - выбор пункта меню
+            switch (active_menu) {
+            case 0:
+                bankRequest();
+                writeOff(currentDev);
+                return;
+                //balance
+            case 1: // Вход как пользователь
+                system("cls");
+                return;
+            case 2: // Вход как разработчик (не реализовано)
+                system("cls");
+                return;
+            case 3: // Выход из программы
+                system("cls");
+                firstWin();
+                return;
+            case 4:
+                exit(0);
+                return;
+            }
+            break;
+        case 32: // SPACE - вывод информации о разработчике и выход из меню
+            system("cls");
+            cout << "Эта великолепнейшая программа разработана величайшим Тимофеем Солдатенковым, с которым вы можете связаться через тг: @geralttop. В инсте, по идее, также. Хотелось бы сказать спасибо за помощь в разработке моим друзьям: Бордюру, Даниилу, МегаВане315. Спасибо Хидео Кодзиме за то, что он создал великолепнейшую игру, продолжение которой я очень жду. Спасибо моей бро Протасене (ударение на первое е. И мою бро зовут Полина, моя одноклассница, которая помогала мне в школе, которая заставила меня задуматься о современной молодежной моде и лицемерии. Спасибо Автору и левым за идеи, которые вложили в меня, и которые я вложил в этот проект.";
+            _getch();
+            system("cls");
+            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
+            return;
+        }
+    }
+    _getch();
+    return;
 }
 // Первое окно программы
 void firstWin() {
