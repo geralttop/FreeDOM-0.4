@@ -130,12 +130,14 @@
   <ItemGroup>
     <ClCompile Include="Dev.cpp" />
     <ClCompile Include="FreeDOM.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Lib.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dev.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Lib.h" />
     <ClInclude Include="User.h" />

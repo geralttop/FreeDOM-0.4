@@ -1,14 +1,3 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (FreeDOM 0.4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
-  Dev.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (FreeDOM 0.4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   FreeDOM.cpp
-  Human.cpp
-  Lib.cpp
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(416,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(753,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(963,77): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1098,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1185,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1281,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-  User.cpp
-  Создание кода...
-  FreeDOM 0.4.vcxproj -> C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\x64\Debug\FreeDOM.exe
+  FreeDOM 0.4.vcxproj -> C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2023\c++\FreeDOM-0.4\x64\Debug\FreeDOM.exe

@@ -6,10 +6,12 @@
 #include <fstream>
 #include "User.h"
 #include "Dev.h"
+#include "Game.h"
 
 void bankRequest();
 vector<Dev> writingDevs();
 vector<User> writingUsers();
+vector<Game> writingDevGames(string devName);
 void SignInUs(bool isUser);
 void SignInUp(bool isUser);
 void SignUpUs();

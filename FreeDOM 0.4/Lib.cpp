@@ -7,6 +7,7 @@
 #include "User.h" // Пользовательский заголовочный файл с определением класса User
 #include "Lib.h" // Пользовательский заголовочый файл с определением функций
 #include <Windows.h> // Библиотека для работы с Windows API
+#include "Game.h"
 #include "Dev.h"
 #include <stdio.h>
 #include <conio.h>
@@ -14,7 +15,6 @@
 #include <thread>
 
 using namespace std;
-
 
 // Функция для чтения пользователей из файлов и записи их в вектор
 vector<User> writingUsers() {
@@ -69,6 +69,7 @@ vector<Dev> writingDevs() {
     std::ifstream ifDevPass;
     std::ifstream ifDevBalance;
     std::ifstream ifDevCardNum;
+
     ifDevLogin.open("Data/devNames.txt");
     ifDevPass.open("Data/passOfDevs.txt");
     ifDevBalance.open("Data/devBalances.txt");
@@ -106,6 +107,44 @@ vector<Dev> writingDevs() {
 
     // Возврат вектора разработчиков
     return devs;
+}
+
+vector<Game> writingDevGames(string devName) {
+    vector<Game> devGames;
+
+    string pathAbout = "Data/DevGames/About/" + devName + "About.txt";
+    string pathName = "Data/DevGames/" + devName + "Games.txt";
+    string pathPrice = "Data/DevGames/Price/" + devName + "Price.txt";
+
+    ifstream ifAbout;
+    ifstream ifName;
+    ifstream ifPrice;
+
+    ifAbout.open(pathAbout);
+    ifName.open(pathName);
+    ifPrice.open(pathPrice);
+
+    int i = 0;
+    while (!ifName.eof()) {
+        string name;
+        string about;
+        string price;
+        
+        getline(ifName, name);
+        getline(ifAbout, about);
+        getline(ifPrice, price);
+
+        float fprice = stof(price);
+        //cout << fprice;
+        devGames.push_back(Game(name, about, fprice, i));
+        i++;
+    }
+
+    ifAbout.close();
+    ifName.close();
+    ifPrice.close();
+
+    return devGames;
 }
 
 //Все это надо для крутого меню
@@ -272,6 +311,19 @@ void bankRequest() {
     cout << "Банк одобрил операцию";
     this_thread::sleep_for(std::chrono::milliseconds(1200));
     system("cls");
+}
+
+void BigText(int x, int y, int x1, string text) {
+    int xx = x;
+    for (int i = 0; i < text.length(); i++) {
+        if (xx == x1) {
+            xx = x;
+            y++;
+        }
+        GoToXY(xx, y);
+        xx++;
+        cout << text[i];
+    }
 }
 // Функция для входа пользователя в систему
 void SignInUs(bool isUser) {
@@ -1142,6 +1194,94 @@ void UsCabinet(User currentUser) {
     _getch();
 }
 
+void PageList(Game game) {
+    system("cls");
+    GoToXY(5, 1);
+    cout << game.getName();
+    GoToXY(40, 1);
+    cout << game.getPrice();
+    BigText(2, 2, 47, game.getAbout());
+    /*GoToXY(5, 2);
+    cout << game.getAbout();*/
+    _getch();
+}
+
+void GamesList(string currentDevName) {
+    vector<Game> games = writingDevGames(currentDevName);
+    int x = 5, x1 = 40, y = 1;
+
+    int active_menu = 0;
+
+    // Переменная для чтения нажатых клавиш
+    char ch;
+
+    while (true) {
+        int x = 5, x1 = 40, y = 1;
+        GoToXY(x, y);
+        // Цикл для отображения пунктов меню
+        for (int i = 0; i < games.size(); i++) {
+            // Установка цвета текста в зависимости от активного пункта меню
+            if (i == active_menu) {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+            }
+            else {
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
+            }
+            GoToXY(x, y++);
+            cout << games[i].getName() << endl;
+            y--;
+            GoToXY(x1, y++);
+            cout << games[i].getPrice();
+        }
+        // Считывание нажатой клавиши
+        ch = _getch();
+        // Обработка нажатий стрелок для перемещения по меню
+        if (ch == -32) ch = _getch();
+        switch (ch) {
+        case 27: // ESC - выход из программы
+            exit(0);
+        case 72: // UP - перемещение вверх по меню
+            if (active_menu == 0) {
+                active_menu = games.size() - 1;
+            }
+            else if (active_menu > 0) {
+                --active_menu;
+            }
+            break;
+        case 80: // DOWN - перемещение вниз по меню
+            if (active_menu == games.size() - 1) {
+                active_menu = 0;
+            }
+            else if (active_menu < games.size() - 1) {
+                ++active_menu;
+            }
+            break;
+        case 13: // ENTER - выбор пункта меню
+            PageList(games[active_menu]);
+            return;
+            break;
+        case 32: // SPACE - вывод информации о разработчике и выход из меню
+            system("cls");
+            cout << "Эта великолепнейшая программа разработана величайшим Тимофеем Солдатенковым, с которым вы можете связаться через тг: @geralttop. В инсте, по идее, также. Хотелось бы сказать спасибо за помощь в разработке моим друзьям: Бордюру, Даниилу, МегаВане315. Спасибо Хидео Кодзиме за то, что он создал великолепнейшую игру, продолжение которой я очень жду. Спасибо моей бро Протасене (ударение на первое е. И мою бро зовут Полина, моя одноклассница, которая помогала мне в школе, которая заставила меня задуматься о современной молодежной моде и лицемерии. Спасибо Автору и левым за идеи, которые вложили в меня, и которые я вложил в этот проект.";
+            _getch();
+            system("cls");
+            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
+            return;
+        }
+    }
+
+
+
+    /*for (int i = 0; i < games.size(); i++) {
+        y += 1;
+        GoToXY(x, y);
+        cout << games[i].getName();
+        GoToXY(x1, y);
+        cout << games[i].getPrice();
+    }*/
+    _getch();
+}
+
 void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
@@ -1205,6 +1345,7 @@ void DevCabinet(Dev currentDev) {
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
+                GamesList(currentDev.getLogin());
                 return;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
@@ -1230,7 +1371,6 @@ void DevCabinet(Dev currentDev) {
     _getch();
     return;
 }
-
 
 // Первое окно программы
 void firstWin() {
