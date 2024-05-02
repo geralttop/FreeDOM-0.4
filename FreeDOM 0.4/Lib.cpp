@@ -1214,12 +1214,19 @@ void GamesList(string currentDevName) {
 
     // Переменная для чтения нажатых клавиш
     char ch;
-
+    int minShowGame = 0, maxShomGame = 10;
+    if (maxShomGame > games.size()) maxShomGame = games.size();
     while (true) {
-        int x = 5, x1 = 40, y = 1;
+        GoToXY(10, 12);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        cout << "<- Пр. Стр.          Сл. Стр. -> ";
+        GoToXY(21, 13);
+        cout << "Назад(Ecs)";
+        bool isCanNext = true, isCanPrev = true;
+        int x = 5, x1 = 42, y = 1;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
-        for (int i = 0; i < games.size(); i++) {
+        for (int i = minShowGame; i < maxShomGame; i++) {
             // Установка цвета текста в зависимости от активного пункта меню
             if (i == active_menu) {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
@@ -1239,7 +1246,8 @@ void GamesList(string currentDevName) {
         if (ch == -32) ch = _getch();
         switch (ch) {
         case 27: // ESC - выход из программы
-            exit(0);
+            system("cls");
+            return;
         case 72: // UP - перемещение вверх по меню
             if (active_menu == 0) {
                 active_menu = games.size() - 1;
@@ -1254,6 +1262,37 @@ void GamesList(string currentDevName) {
             }
             else if (active_menu < games.size() - 1) {
                 ++active_menu;
+            }
+            break;
+        case 77:
+            system("cls");
+            if (maxShomGame + 10 > games.size()) {
+                if (minShowGame + 10 < games.size()) {
+                    minShowGame += 10;
+                    active_menu += 10;
+                }
+               
+                maxShomGame = games.size();
+            }
+            else {
+                active_menu += 10;
+                minShowGame += 10;
+                maxShomGame += 10;
+            }
+            break;
+        case 75:
+            system("cls");
+            if (minShowGame - 10 < 0) {
+                minShowGame = 0;
+                if (maxShomGame - 10 < 0) {
+                    maxShomGame = 10;
+                }
+                if (maxShomGame > games.size()) maxShomGame = games.size();
+            }
+            else {
+                active_menu -= 10;
+                maxShomGame = minShowGame;
+                minShowGame -= 10;
             }
             break;
         case 13: // ENTER - выбор пункта меню
@@ -1285,12 +1324,6 @@ void GamesList(string currentDevName) {
 void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
-    int x = 3, y = 1;
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    GoToXY(3, 1);
-    cout << "Ваша назва: " << currentDev.getLogin();
-    GoToXY(30, 1);
-    cout << "Ваш баланс: " << currentDev.getBalance();
 
     string Menu[] = { "Списать деньги на карту", "Список моих игр", "Добавить игру", "Выход на 1-ое окно", "Выход" };
     int active_menu = 0;
@@ -1299,6 +1332,11 @@ void DevCabinet(Dev currentDev) {
     char ch;
 
     while (true) {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        GoToXY(3, 1);
+        cout << "Ваша назва: " << currentDev.getLogin();
+        GoToXY(30, 1);
+        cout << "Ваш баланс: " << currentDev.getBalance();
         int x = 15, y = 5;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
@@ -1346,7 +1384,7 @@ void DevCabinet(Dev currentDev) {
             case 1: // Вход как пользователь
                 system("cls");
                 GamesList(currentDev.getLogin());
-                return;
+                break;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
                 return;
