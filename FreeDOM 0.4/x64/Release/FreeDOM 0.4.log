@@ -8,12 +8,13 @@ C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\
 C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(805,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
 C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1015,77): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
 C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1150,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1218,61): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1253,44): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1275,41): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1290,73): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1363,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1459,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1225,61): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1281,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1291,86): warning C4267: +=: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1295,41): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1310,73): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1382,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1478,42): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   User.cpp
   Создание кода
   Previous IPDB not found, fall back to full compilation.
