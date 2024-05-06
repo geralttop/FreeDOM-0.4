@@ -13,6 +13,7 @@
 #include <conio.h>
 #include <chrono>
 #include <thread>
+#include <regex>
 
 using namespace std;
 
@@ -147,6 +148,20 @@ vector<Game> writingDevGames(string devName) {
     return devGames;
 }
 
+vector<Game> writngAllGames() {
+    /*std::vector<int> vec1{ 1, 2, 3, 4, 5 };
+    std::vector<int> vec2{ 0, 9, 8, 7, 6 };
+    std::vector<int> sum(vec1.size());
+    vec1.insert(vec1.end(), vec2.begin(), vec2.end());
+    cout << vec1[6];*/
+    vector<Game> allGames;
+    vector<Dev> devs = writingDevs();
+    for (int i = 0; i < devs.size(); i++) {
+        vector<Game> devGames = writingDevGames(devs[i].getLogin());
+        allGames.insert(allGames.end(), devGames.begin(), devGames.end());
+    }
+    return allGames;
+}
 //Все это надо для крутого меню
 // Получаем дескриптор консоли
 HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -678,6 +693,17 @@ bool validateCardNumber(const std::string& cardNumber) {
     // Если номер карты прошел все проверки, возвращаем true
     return true;
 }
+
+bool validateGameName(const std::string& name) {
+    if (name.length() <= 5) {
+        return false;
+    }
+
+    // Регулярное выражение для поиска букв (русских или английских)
+    std::regex letterRegex("[а-яА-Яa-zA-Z]");
+    return std::regex_search(name, letterRegex);
+}
+
 // Функция для регистрации нового пользователя
 void SignUpUs() {
     vector<User> users = writingUsers();
@@ -1340,6 +1366,48 @@ void GamesList(string currentDevName) {
     _getch();
 }
 
+void addGame() {
+    system("cls");
+    vector<Game> allGames = writngAllGames();
+    int x = 10, y = 2;
+
+    string name;
+    string about;
+    string price;
+
+    GoToXY(x, y);
+    cout << "Название игры: ";
+    getline(cin, name);
+
+    if (!validateGameName(name)) {
+        GoToXY(x, ++y);
+        cout << "Название игры должно быть длиннее 5 символов и содержать хотя бы 1 букву." << endl;
+        this_thread::sleep_for(chrono::milliseconds(1200));
+        addGame();
+        return;
+    }
+    for (int i = 0; i < allGames.size(); i++) {
+        if (name == allGames[i].getName()) {
+            GoToXY(x, ++y);
+            cout << "Такое название уже занято";
+            this_thread::sleep_for(std::chrono::milliseconds(1200));
+            addGame();
+            return;
+        }
+    }
+    
+
+    GoToXY(x, ++y);
+    cout << "Цена для игры: ";
+    getline(cin, price);
+
+    GoToXY(x, ++y);
+    cout << "Описание игры: ";
+    GoToXY(3, ++y);
+    getline(cin, about);
+    _getch();
+}
+
 void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
@@ -1429,10 +1497,17 @@ void DevCabinet(Dev currentDev) {
     return;
 }
 
+
+void AboutApp() {
+    cout << "Синие текст -- это просто текст\nКрасный текст -- это кнопки между которыми можно переключаться с помощью стрелок вверх-вниз\nЗеленый -- ввод значений с клавиатуры";
+    _getch();
+    system("cls");
+}
 // Первое окно программы
 void firstWin() {
     // Устанавливает размер окна консоли
     system("mode con cols=49 lines=15");
+    AboutApp();
     // Отключает видимость курсора в консоли
     ConsoleCursorVisible(false, 100);
 
