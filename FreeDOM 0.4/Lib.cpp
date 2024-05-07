@@ -135,6 +135,7 @@ vector<Game> writingDevGames(string devName) {
         getline(ifAbout, about);
         getline(ifPrice, price);
 
+        if (price == "") price = "0";
         float fprice = stof(price);
         //cout << fprice;
         devGames.push_back(Game(name, about, fprice, i));
@@ -1033,7 +1034,7 @@ void SignUpDev() {
 
     // Запись данных пользователя в файлы
     ofDevLogin << std::endl << signUpLogin;
-    ofDevBalance << std::endl << 0;
+    ofDevBalance << std::endl << "0";
     ofDevPass << std::endl << signUpPass;
     ofDevCardNum << std::endl << signDevCardNum;
 
@@ -1045,6 +1046,18 @@ void SignUpDev() {
     ofDevBalance.close();
     ofDevPass.close();
     ofDevCardNum.close();
+
+    ofstream ofDevGames;
+    ofstream ofGamesAbout;
+    ofstream ofGamesPrice;
+
+    ofDevGames.open("Data/DevGames/" + signUpLogin + "Games.txt");
+    ofGamesAbout.open("Data/DevGames/About/" + signUpLogin + "About.txt");
+    ofGamesPrice.open("Data/DevGames/Price/" + signUpLogin + "Price.txt");
+
+    ofDevGames.close();
+    ofGamesAbout.close();
+    ofGamesPrice.close();
 
     DevCabinet(devs[devs.size() - 1]);
 }
@@ -1114,12 +1127,12 @@ void writeOff(Dev currenDev) {
     
     ofstream ofDevBalance;
     ofDevBalance.open("Data/devBalances.txt");
-    ofDevBalance << devs[0].getBalance();
+    ofDevBalance << "0";
     for (int i = 1; i < devs.size(); i++) {
         ofDevBalance << endl << devs[i].getBalance();
     }
 
-    DevCabinet(currenDev);
+    //DevCabinet(currenDev);
     return;
 }
 
@@ -1366,7 +1379,7 @@ void GamesList(string currentDevName) {
     _getch();
 }
 
-void addGame() {
+void addGame(string DevName) {
     system("cls");
     vector<Game> allGames = writngAllGames();
     int x = 10, y = 2;
@@ -1383,7 +1396,7 @@ void addGame() {
         GoToXY(x, ++y);
         cout << "Название игры должно быть длиннее 5 символов и содержать хотя бы 1 букву." << endl;
         this_thread::sleep_for(chrono::milliseconds(1200));
-        addGame();
+        addGame(DevName);
         return;
     }
     for (int i = 0; i < allGames.size(); i++) {
@@ -1391,7 +1404,7 @@ void addGame() {
             GoToXY(x, ++y);
             cout << "Такое название уже занято";
             this_thread::sleep_for(std::chrono::milliseconds(1200));
-            addGame();
+            addGame(DevName);
             return;
         }
     }
@@ -1404,8 +1417,34 @@ void addGame() {
     GoToXY(x, ++y);
     cout << "Описание игры: ";
     GoToXY(3, ++y);
-    getline(cin, about);
-    _getch();
+    getline(cin, about); //440 символов максимум
+
+    ofstream ofGameName;
+    ofstream ofAboutGame;
+    ofstream ofPriceGame;
+
+    ofGameName.open("Data/DevGames/" + DevName + "Games.txt", ofstream::app);
+    ofAboutGame.open("Data/DevGames/About/" + DevName + "About.txt", ofstream::app);
+    ofPriceGame.open("Data/DevGames/Price/" + DevName + "Price.txt", ofstream::app);
+    
+    if (writingDevGames(DevName)[0].getName() == "") {
+        ofGameName << name;
+        ofAboutGame << about;
+        ofPriceGame << price;
+    }
+    else {
+        ofGameName << endl << name;
+        ofAboutGame << endl << about;
+        ofPriceGame << endl << price;
+    }
+    
+
+    ofGameName.close();
+    ofAboutGame.close();
+    ofPriceGame.close();
+    
+    system("cls");
+    return;
 }
 
 void DevCabinet(Dev currentDev) {
@@ -1466,15 +1505,16 @@ void DevCabinet(Dev currentDev) {
             case 0:
                 bankRequest();
                 writeOff(currentDev);
-                return;
+                break;
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
                 GamesList(currentDev.getLogin());
                 break;
             case 2: // Вход как разработчик (не реализовано)
-                system("cls");
-                return;
+                //system("cls");
+                addGame(currentDev.getLogin());
+                break;
             case 3: // Выход из программы
                 system("cls");
                 firstWin();
@@ -1507,7 +1547,7 @@ void AboutApp() {
 void firstWin() {
     // Устанавливает размер окна консоли
     system("mode con cols=49 lines=15");
-    AboutApp();
+    //AboutApp();
     // Отключает видимость курсора в консоли
     ConsoleCursorVisible(false, 100);
 

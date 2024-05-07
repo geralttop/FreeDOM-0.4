@@ -21,4 +21,4 @@ void firstWin();
 void UsCabinet(User currentUser);
 void topUp(User currentBalance);
 void DevCabinet(Dev currenDev);
-void addGame();
+void addGame(string DevName);
