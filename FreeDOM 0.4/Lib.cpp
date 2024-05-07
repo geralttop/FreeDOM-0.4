@@ -1127,12 +1127,13 @@ void writeOff(Dev currenDev) {
     
     ofstream ofDevBalance;
     ofDevBalance.open("Data/devBalances.txt");
-    ofDevBalance << "0";
+    ofDevBalance << devs[0].getBalance();
     for (int i = 1; i < devs.size(); i++) {
         ofDevBalance << endl << devs[i].getBalance();
     }
 
-    //DevCabinet(currenDev);
+    ofDevBalance.close();
+    DevCabinet(currenDev);
     return;
 }
 
@@ -1149,12 +1150,7 @@ void UsCabinet(User currentUser) {
     cout << "Ваше имя:";
     GoToXY(x, ++y);
     cout << currentUser.getLogin();*/
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    int x = 3, y = 1;
-    GoToXY(3, 1);
-    cout << "Ваше имя: " << currentUser.getLogin();
-    GoToXY(30, 1);
-    cout << "Ваш баланс: " << currentUser.getBalance();
+    
 
     string Menu[] = { "Пополнить баланс", "Список моих игр", "Поиск игр", "Выход на 1-ое окно", "Выход"};
     int active_menu = 0;
@@ -1163,7 +1159,13 @@ void UsCabinet(User currentUser) {
     char ch;
 
     while (true) {
-        int x = 15, y = 5;
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        int x = 3, y = 1;
+        GoToXY(3, 1);
+        cout << "Ваше имя: " << currentUser.getLogin();
+        GoToXY(30, 1);
+        cout << "Ваш баланс: " << currentUser.getBalance();
+        x = 15, y = 5;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
         for (int i = 0; i < size(Menu); i++) {
@@ -1211,7 +1213,8 @@ void UsCabinet(User currentUser) {
                 return;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
-                return;
+                GamesList(writngAllGames());
+                break;
             case 3: // Выход из программы
                 system("cls");
                 firstWin();
@@ -1252,8 +1255,25 @@ void PageList(Game game) {
     }
 }
 
-void GamesList(string currentDevName) {
-    vector<Game> games = writingDevGames(currentDevName);
+void FindGame(vector<Game> games) {
+    vector<Game> filtergames;
+
+    cout << "Введите название игры";
+    string name;
+    getline(cin, name);
+
+    for (int i = 0; i < games.size(); i++) {
+        size_t found = games[i].getName().find(name);
+        if (found != std::string::npos) filtergames.push_back(games[i]);
+    }
+
+    system("cls");
+    GamesList(filtergames);
+    return;
+}
+
+void GamesList(vector<Game> games) {
+    
     int x = 5, x1 = 40, y = 1;
 
     int active_menu = 0;
@@ -1266,8 +1286,8 @@ void GamesList(string currentDevName) {
         GoToXY(10, 12);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         cout << "<- Пр. Стр.          Сл. Стр. -> ";
-        GoToXY(21, 13);
-        cout << "Назад(Ecs)";
+        GoToXY(10, 13);
+        cout << "Назад(Ecs)        Поиск игр(Space)";
         bool isCanNext = true, isCanPrev = true;
         int x = 5, x1 = 42, y = 1;
         GoToXY(x, y);
@@ -1358,12 +1378,16 @@ void GamesList(string currentDevName) {
             PageList(games[active_menu]);
             //return;
             break;
-        case 32: // SPACE - вывод информации о разработчике и выход из меню
+        case 70: // SPACE - вывод информации о разработчике и выход из меню
             system("cls");
             _getch();
             system("cls");
             cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
             return;
+        case 32:
+            system("cls");
+            FindGame(games);
+            break;
         }
     }
 
@@ -1505,11 +1529,11 @@ void DevCabinet(Dev currentDev) {
             case 0:
                 bankRequest();
                 writeOff(currentDev);
-                break;
+                return;
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
-                GamesList(currentDev.getLogin());
+                GamesList(writingDevGames(currentDev.getLogin()));
                 break;
             case 2: // Вход как разработчик (не реализовано)
                 //system("cls");

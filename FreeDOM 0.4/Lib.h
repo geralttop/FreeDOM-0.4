@@ -18,6 +18,7 @@ void SignInUp(bool isUser);
 void SignUpUs();
 void SignUpDev();
 void firstWin();
+void GamesList(vector<Game> games);
 void UsCabinet(User currentUser);
 void topUp(User currentBalance);
 void DevCabinet(Dev currenDev);

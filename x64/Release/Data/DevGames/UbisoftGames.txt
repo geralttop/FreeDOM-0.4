@@ -10,12 +10,6 @@ Tom Clancy's Rainbow Six Siege2
 Watch Dogs 22
 Tom Clancy's The Division 22
 Rayman Legends2
-Assassin's Creed Mirage3
-Far Cry 63
-Tom Clancy's Rainbow Six Siege3
-Watch Dogs 23
-Tom Clancy's The Division 23
-Rayman Legends3
 Assassin's Creed Mirage1
 Far Cry 61
 Tom Clancy's Rainbow Six Siege1
@@ -28,9 +22,17 @@ Tom Clancy's Rainbow Six Siege2
 Watch Dogs 22
 Tom Clancy's The Division 22
 Rayman Legends2
-Assassin's Creed Mirage3
-Far Cry 63
-Tom Clancy's Rainbow Six Siege3
-Watch Dogs 23
-Tom Clancy's The Division 23
-Rayman Legends3
+Assassin's Creed Mirage1
+Far Cry 61
+Tom Clancy's Rainbow Six Siege1
+Watch Dogs 21
+Tom Clancy's The Division 21
+Rayman Legends1
+Assassin's Creed Mirage2
+Far Cry 62
+Tom Clancy's Rainbow Six Siege2
+Watch Dogs 22
+Tom Clancy's The Division 22
+Rayman Legends2
+Watch Dogs 5
+Watch Dogs 6
