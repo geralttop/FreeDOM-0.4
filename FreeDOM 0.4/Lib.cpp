@@ -163,6 +163,40 @@ vector<Game> writngAllGames() {
     }
     return allGames;
 }
+
+vector<string> writingUseGames(string UsName) {
+    vector<string> UserGames;
+
+    ifstream ifUsGames;
+    ifUsGames.open("Data/UserGames/" + UsName + "Games.txt");
+
+    while (!ifUsGames.eof()) {
+        string name;
+        getline(ifUsGames, name);
+        UserGames.push_back(name);
+    }
+
+    ifUsGames.close();
+    return UserGames;
+}
+
+vector<Game> writingUseGamesData(User user) {
+    vector<string> UsGamesStr = writingUseGames(user.getLogin());
+    vector<Game> allGames = writngAllGames();
+
+    vector<Game> DataUsGames;
+    
+    for (int i = 0; i < allGames.size(); i++) {
+        for (int j = 0; j < UsGamesStr.size(); j++) {
+            if (UsGamesStr[j] == allGames[i].getName()) {
+                DataUsGames.push_back(allGames[i]);
+                continue;
+            }
+        }
+    }
+
+    return DataUsGames;
+}
 //Все это надо для крутого меню
 // Получаем дескриптор консоли
 HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -848,6 +882,10 @@ void SignUpUs() {
     ofUsBalance.close();
     ofUsPass.close();
 
+    ofstream ofUsGames;
+    ofUsGames.open("Data/UserGames/" + signUpLogin + "Games.txt");
+    ofUsGames.close();
+
     // Вывод сообщения об успешной регистрации
     UsCabinet(users[users.size()-1]);
 
@@ -1201,7 +1239,8 @@ void UsCabinet(User currentUser) {
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
-                return;
+                GamesList(writingUseGamesData(currentUser), false, "");
+                break;;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
                 GamesList(writngAllGames(), true, currentUser.getLogin());
@@ -1230,14 +1269,25 @@ void UsCabinet(User currentUser) {
 void BuyGame(Game game, string UsName) {
     system("cls");
     vector<User> users = writingUsers();
+    vector<string> userGames = writingUseGames(UsName);
 
     User user;
+    
     for (int i = 0; i < users.size(); i++) {
         if (users[i].getLogin() == UsName) user = users[i];
     }
 
-    ifstream ifUsGames;
-    ifUsGames.open("Data/DevUsers/" + UsName + "Games.txt");
+    for (int i = 0; i < userGames.size(); i++) {
+        if (userGames[i] == game.getName()) {
+            system("cls");
+            cout << "Игра уже куплена";
+            this_thread::sleep_for(std::chrono::milliseconds(1200));
+            system("cls");
+            return;
+        }
+    }
+    /*ifstream ifUsGames;
+    ifUsGames.open("Data/UserGames/" + UsName + "Games.txt");
 
     while (!ifUsGames.eof()) {
         string name;
@@ -1249,24 +1299,52 @@ void BuyGame(Game game, string UsName) {
             ifUsGames.close();
             return;
         }
-    }
+    }*/
 
     if (user.getBalance() > game.getPrice()) {
-        //bankRequest();
+        bankRequest();
         user.setBalance(user.getBalance() - game.getPrice());
+        system("cls");
+        cout << "Игра добавлена в вашу библиотеку";
+        this_thread::sleep_for(std::chrono::milliseconds(1200));
+        system("cls");
+
     }
     else {
+        system("cls");
         cout << "Хаха лох, недостаточно денег";
+        this_thread::sleep_for(std::chrono::milliseconds(1200));
         system("cls");
         return;
     }
 
     ofstream ofUsGames;
-    ofUsGames.open("Data/DevUsers/" + UsName + "Games.txt", ofstream::app);
-
-    ofUsGames << endl << game.getName();
-
+    ofUsGames.open("Data/UserGames/" + UsName + "Games.txt", ofstream::app);
+    
+    if (userGames[0] == "") {
+        ofUsGames << game.getName();
+    }
+    else {
+        ofUsGames << endl << game.getName();
+    }
     ofUsGames.close();
+
+    ofstream ofUsBalance;
+    ofUsBalance.open("Data/userBalances.txt");
+
+    users[user.getIndex()] = user;
+
+    ofUsBalance << users[0].getBalance();
+    for (int i = 1; i < users.size(); i++) {
+        ofUsBalance << endl << users[i].getBalance();
+    }
+    ofUsBalance.close();
+    //bankRequest();
+
+
+
+    system("cls");
+    UsCabinet(user);
     return;
 }
 
@@ -1421,7 +1499,7 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
         case 13: // ENTER - выбор пункта меню
             PageList(games[active_menu], isUser, UsName);
             //return;
-            break;
+            return;
         case 70: // SPACE - вывод информации о разработчике и выход из меню
             system("cls");
             _getch();

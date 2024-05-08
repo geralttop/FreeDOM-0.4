@@ -13,6 +13,7 @@ vector<Dev> writingDevs();
 vector<User> writingUsers();
 vector<Game> writingDevGames(string devName);
 vector<Game> writngAllGames();
+vector<string> writingUseGames(string UsName);
 void SignInUs(bool isUser);
 void SignInUp(bool isUser);
 void SignUpUs();
