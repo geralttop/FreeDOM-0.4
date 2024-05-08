@@ -11,17 +11,20 @@ private:
 	string about;
 	float price;
 	int index;
+	string devName;
 public:
-	Game(string name, string about, float price, int index);
+	Game(string name, string about, float price, int index, string devName);
 	Game();
 	//getters
 	string getName();
 	string getAbout();
 	float getPrice();
 	int getIndex();
+	string getDevName();
 	//setters
 	void setName(string name);
 	void setAbout(string about);
 	void setPrice(float price);
+	void setDevName(string devName);
 };
 

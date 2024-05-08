@@ -138,7 +138,7 @@ vector<Game> writingDevGames(string devName) {
         if (price == "") price = "0";
         float fprice = stof(price);
         //cout << fprice;
-        devGames.push_back(Game(name, about, fprice, i));
+        devGames.push_back(Game(name, about, fprice, i, devName));
         i++;
     }
 
@@ -1141,15 +1141,6 @@ void UsCabinet(User currentUser) {
     ConsoleCursorVisible(false, 100);
     system("cls");
     system("mode con cols=49 lines=15");
-    /*int x = 10, y = 5;
-    GoToXY(x, y);
-    cout << "Ваш баланс:";
-    GoToXY(x, ++y);
-    cout << currentUser.getBalance();
-    GoToXY(x, ++y);
-    cout << "Ваше имя:";
-    GoToXY(x, ++y);
-    cout << currentUser.getLogin();*/
     
 
     string Menu[] = { "Пополнить баланс", "Список моих игр", "Поиск игр", "Выход на 1-ое окно", "Выход"};
@@ -1213,7 +1204,7 @@ void UsCabinet(User currentUser) {
                 return;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
-                GamesList(writngAllGames());
+                GamesList(writngAllGames(), true, currentUser.getLogin());
                 break;
             case 3: // Выход из программы
                 system("cls");
@@ -1236,7 +1227,50 @@ void UsCabinet(User currentUser) {
     _getch();
 }
 
-void PageList(Game game) {
+void BuyGame(Game game, string UsName) {
+    system("cls");
+    vector<User> users = writingUsers();
+
+    User user;
+    for (int i = 0; i < users.size(); i++) {
+        if (users[i].getLogin() == UsName) user = users[i];
+    }
+
+    ifstream ifUsGames;
+    ifUsGames.open("Data/DevUsers/" + UsName + "Games.txt");
+
+    while (!ifUsGames.eof()) {
+        string name;
+
+        getline(ifUsGames, name);
+        if (UsName == name) {
+            cout << "Игра уже куплена";
+            system("cls");
+            ifUsGames.close();
+            return;
+        }
+    }
+
+    if (user.getBalance() > game.getPrice()) {
+        //bankRequest();
+        user.setBalance(user.getBalance() - game.getPrice());
+    }
+    else {
+        cout << "Хаха лох, недостаточно денег";
+        system("cls");
+        return;
+    }
+
+    ofstream ofUsGames;
+    ofUsGames.open("Data/DevUsers/" + UsName + "Games.txt", ofstream::app);
+
+    ofUsGames << endl << game.getName();
+
+    ofUsGames.close();
+    return;
+}
+
+void PageList(Game game, bool isUser, string UsName) {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     system("cls");
     GoToXY(5, 1);
@@ -1244,6 +1278,11 @@ void PageList(Game game) {
     GoToXY(40, 1);
     cout << game.getPrice();
     BigText(2, 3, 48, game.getAbout());
+    if (isUser) {
+        GoToXY(15, 13);
+        cout << "Купить";
+    }
+    
     /*GoToXY(5, 2);
     cout << game.getAbout();*/
     while (true) {
@@ -1252,10 +1291,15 @@ void PageList(Game game) {
             system("cls");
             return;
         }
+        if (isUser && ch == 13) {
+            BuyGame(game, UsName);
+            return;
+        }
+
     }
 }
 
-void FindGame(vector<Game> games) {
+void FindGame(vector<Game> games, bool isUser, string UsName) {
     vector<Game> filtergames;
 
     cout << "Введите название игры";
@@ -1268,11 +1312,11 @@ void FindGame(vector<Game> games) {
     }
 
     system("cls");
-    GamesList(filtergames);
+    GamesList(filtergames, isUser, UsName);
     return;
 }
 
-void GamesList(vector<Game> games) {
+void GamesList(vector<Game> games, bool isUser, string UsName) {
     
     int x = 5, x1 = 40, y = 1;
 
@@ -1375,7 +1419,7 @@ void GamesList(vector<Game> games) {
             }
             break;
         case 13: // ENTER - выбор пункта меню
-            PageList(games[active_menu]);
+            PageList(games[active_menu], isUser, UsName);
             //return;
             break;
         case 70: // SPACE - вывод информации о разработчике и выход из меню
@@ -1386,7 +1430,7 @@ void GamesList(vector<Game> games) {
             return;
         case 32:
             system("cls");
-            FindGame(games);
+            FindGame(games, isUser, UsName);
             break;
         }
     }
@@ -1533,7 +1577,7 @@ void DevCabinet(Dev currentDev) {
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
-                GamesList(writingDevGames(currentDev.getLogin()));
+                GamesList(writingDevGames(currentDev.getLogin()), false, "");
                 break;
             case 2: // Вход как разработчик (не реализовано)
                 //system("cls");
