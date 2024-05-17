@@ -9,18 +9,18 @@ class Human
 protected:
 	string login;
 	string pass;
-	float balance;
+	double balance;
 	int index;
 public:
 	//getters
 	string getLogin();
 	string getPass();
-	float getBalance();
+	double getBalance();
 	int getIndex();
 
 	//setters
 	void setLogin(string log);
 	void setPass(string p);
-	void setBalance(float bal);
+	void setBalance(double bal);
 };
 

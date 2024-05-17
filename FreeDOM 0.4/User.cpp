@@ -4,7 +4,7 @@
 #include <string>
 #include <cctype>
 
-User::User(string log, string p, float bal, int index) {
+User::User(string log, string p, double bal, int index) {
 	login = log;
 	pass = p;
 	balance = bal;

@@ -4,7 +4,7 @@
 #include <string>
 #include <cctype>
 
-Dev::Dev(string log, string p, float bal, string cNum, int index) {
+Dev::Dev(string log, string p, double bal, string cNum, int index) {
 	login = log;
 	pass = p;
 	balance = bal;

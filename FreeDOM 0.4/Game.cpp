@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <string>
 
-Game::Game(string name, string about, float price, int index, string devName) {
+Game::Game(string name, string about, double price, int index, string devName) {
 	this->name = name;
 	this->about = about;
 	this->price = price;
@@ -18,7 +18,7 @@ string Game::getName() {
 string Game::getAbout() {
 	return about;
 }
-float Game::getPrice() {
+double Game::getPrice() {
 	return price;
 }
 int Game::getIndex() {
@@ -34,7 +34,7 @@ void Game::setName(string name) {
 void Game::setAbout(string about) {
 	this->about = about;
 }
-void Game::setPrice(float price) {
+void Game::setPrice(double price) {
 	this->price = price;
 }
 void Game::setDevName(string devName) {

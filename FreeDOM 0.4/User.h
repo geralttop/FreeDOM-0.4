@@ -6,6 +6,6 @@ class User : public Human
 private:
 
 public:
-	User(string log, string p, float bal, int index);
+	User(string log, string p, double bal, int index);
 	User();
 };

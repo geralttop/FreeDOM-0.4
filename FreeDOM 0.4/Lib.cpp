@@ -14,8 +14,152 @@
 #include <chrono>
 #include <thread>
 #include <regex>
+#include <iomanip>
 
 using namespace std;
+
+string cinSum() {
+    string data = "";
+    char ch;
+    while (true) {
+        if (_kbhit()) { // Проверяем, нажата ли клавиша
+            ch = _getch(); // Считываем символ
+            if (ch == 27) { // ASCII код для Escape
+
+                return "e"; // Возвращаем пустую строку при нажатии Escape
+            }
+            else if (ch == '\r') { // Если нажата Enter
+                if (data.size() > 0)
+                    break; // Выходим из цикла
+            }
+            else if (ch == '\b') { // Если нажата Backspace
+                if (!data.empty()) {
+                    data.pop_back();
+                    cout << "\b \b"; // Удаляем символ из консоли
+                }
+            }
+            else if (isdigit(ch) or ch == '.') {
+                int i = 0;
+                int dotCount = 0;
+                for (int j = 0; j < data.size(); j++) {
+                    if (data[j] == '.') {
+                        dotCount++;
+                        i = j;
+                    }
+                }
+                if (dotCount <= 1) {
+                    if ((dotCount == 1 or data.size() == 0) and ch == '.' or data.size() > 9) continue;
+                    if (i > 0) {
+                        if (data.substr(i).size() == 3) {
+                            continue;
+                        }
+                    }
+                    data += ch;
+                    cout << ch;
+                }
+                //data.substr(ch);
+                /*data += ch;
+                cout << ch; */// Выводим символ на консоль
+            }
+        }
+    }
+    cout << "\n";
+    return data;
+}
+string cinPassword() {
+    string data;
+    char ch;
+    while (true) {
+        if (_kbhit()) { // Проверяем, нажата ли клавиша
+            ch = _getch(); // Считываем символ
+            if (ch == 27) { // ASCII код для Escape
+                return "123456789123456789123456789"; // Возвращаем пустую строку при нажатии Escape
+            }
+            else if (ch == '\r') { // Если нажата Enter
+                if (data.size() > 0)
+                    break; // Выходим из цикла
+            }
+            else if (ch == '\b') { // Если нажата Backspace
+                if (!data.empty()) {
+                    data.pop_back();
+                    cout << "\b \b"; // Удаляем символ из консоли
+                }
+            }
+            else {
+                if (data.size() < 24) {
+                    data += ch;
+                    cout << "*"; // Выводим символ на консоль
+                }
+                
+            }
+        }
+    }
+    cout << "\n";
+    return data;
+}
+string cinUsDevName() {
+    string data;
+    char ch;
+    while (true) {
+        if (_kbhit()) { // Проверяем, нажата ли клавиша
+            ch = _getch(); // Считываем символ
+            if (ch == 27) { // ASCII код для Escape
+                return "123456789123456789123456789"; // Возвращаем пустую строку при нажатии Escape
+            }
+            else if (ch == '\r') { // Если нажата Enter
+                if (data.size() > 0)
+                    break; // Выходим из цикла
+            }
+            else if (ch == '\b') { // Если нажата Backspace
+                if (!data.empty()) {
+                    data.pop_back();
+                    cout << "\b \b"; // Удаляем символ из консоли
+                }
+            }
+            else {
+                if (data.size() < 24) {
+                    data += ch;
+                    cout << ch; // Выводим символ на консоль
+                } // Выводим символ на консоль
+            }
+        }
+    }
+    cout << "\n";
+    return data;
+}
+string cinCardNum() {
+    string data;
+    char ch;
+    while (true) {
+        if (_kbhit()) { // Проверяем, нажата ли клавиша
+            ch = _getch(); // Считываем символ
+            if (ch == 27) { // ASCII код для Escape
+                return "e"; // Возвращаем пустую строку при нажатии Escape
+            }
+            else if (ch == '\r') { // Если нажата Enter
+                if (data.size() > 0)
+                    break; // Выходим из цикла
+            }
+            else if (ch == '\b') { // Если нажата Backspace
+                if (!data.empty()) {
+                    if ((data.size()) % 4 == 0) cout << "\b \b";
+                    data.pop_back();
+                    cout << "\b \b"; // Удаляем символ из консоли
+                }
+            }
+            else {
+                if (isdigit(ch) and  data.size() < 16) {
+                    data += ch;
+                    cout << ch;
+                    if (data.size() % 4 == 0 and data.size() != 16)
+                        cout << " ";
+                }// Выводим символ на консоль
+            }
+        }
+    }
+    cout << "\n";
+    return data;
+}
 
 // Функция для чтения пользователей из файлов и записи их в вектор
 vector<User> writingUsers() {
@@ -37,18 +181,20 @@ vector<User> writingUsers() {
         // Переменные для хранения данных пользователя
         string login;
         string pass;
-        string balance;
+        double balance;
 
         // Считывание данных из файлов
         getline(ifUsLogin, login);
         getline(ifUsPass, pass);
-        getline(ifUsBalance, balance);
+        ifUsBalance >> balance;
 
         // Преобразование строки с балансом в число с плавающей точкой
-        float fbalance = stof(balance);
+        //float fbalance = stof(balance);
+        
+        cout << fixed << std::setprecision(2);
 
         // Создание объекта пользователя с прочитанными данными и добавление его в вектор
-        users.push_back(User(login, pass, fbalance, i));
+        users.push_back(User(login, pass, balance, i));
         i++;
     }
 
@@ -83,20 +229,20 @@ vector<Dev> writingDevs() {
         // Переменные для хранения данных разработчика
         std::string login;
         std::string pass;
-        std::string balance;
+        double balance;
         std::string cardNum;
 
         // Считывание данных из файлов
         std::getline(ifDevLogin, login);
         std::getline(ifDevPass, pass);
-        std::getline(ifDevBalance, balance);
+        ifDevBalance >> balance;
         std::getline(ifDevCardNum, cardNum);
 
         // Преобразование строки с балансом в число с плавающей точкой
-        float fbalance = std::stof(balance);
+       /* float fbalance = std::stof(balance);*/
 
         // Создание объекта разработчика с прочитанными данными и добавление его в вектор
-        devs.push_back(Dev(login, pass, fbalance, cardNum , i));
+        devs.push_back(Dev(login, pass, balance, cardNum , i));
         i++;
     }
 
@@ -388,7 +534,7 @@ void SignInUs(bool isUser) {
     string signInPass;
 
     // Координаты для отображения текста в консоли
-    int x = 15, y = 5;
+    int x = 21, y = 9;
     GoToXY(x, y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите логин и пароль";
@@ -397,26 +543,41 @@ void SignInUs(bool isUser) {
     // Ввод логина пользователя
     std::cout << "login: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    std::getline(std::cin, signInLogin);
+    signInLogin = cinUsDevName();
+    if (signInLogin == "123456789123456789123456789") {
+        system("cls");
+        SignInUp(isUser);
+
+        return;
+    }
+    //std::getline(std::cin, signInLogin);
 
     // Ввод пароля пользователя
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     std::cout << "pass: ";
     char ch;
-    while ((ch = _getch()) != '\r') {
-        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
-        if (ch == '\b') { // Если нажата клавиша Backspace
-            if (!signInPass.empty()) {
-                signInPass.pop_back(); // Удаляем последний символ
-                cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
-            }
-        }
-        else {
-            signInPass.push_back(ch); // Добавляем символ в пароль
-            cout << '*'; // Выводим звездочку вместо символа
-        }
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+    signInPass = cinPassword();
+    if (signInPass == "123456789123456789123456789") {
+        system("cls");
+        SignInUp(isUser);
+        
+        return;
     }
+    //while ((ch = _getch()) != '\r') {
+    //    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
+    //    if (ch == '\b') { // Если нажата клавиша Backspace
+    //        if (!signInPass.empty()) {
+    //            signInPass.pop_back(); // Удаляем последний символ
+    //            cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
+    //        }
+    //    }
+    //    else {
+    //        signInPass.push_back(ch); // Добавляем символ в пароль
+    //        cout << '*'; // Выводим звездочку вместо символа
+    //    }
+    //}
     cout << endl;
 
     if (isUser) {
@@ -481,8 +642,9 @@ void SignInUs(bool isUser) {
 
 // Функция для отображения окна выбора авторизации или регистрации
 void SignInUp(bool isUser) {
+    ConsoleCursorVisible(false, 100);
     // Массив пунктов меню для выбора действия
-    string Menu[] = { "Войти", "Зарегистрироваться", "Назад", "Выход" };
+    string Menu[] = { "Войти в свой аккаунт", "Создать новый аккаунт", "Вернуться назад, на первое окно", "Выход из программы" };
     // Переменная для отслеживания активного пункта меню
     int active_menu = 0;
 
@@ -492,7 +654,7 @@ void SignInUp(bool isUser) {
     char ch;
     // Бесконечный цикл для отображения меню и обработки ввода пользователя
     while (T) {
-        int x = 15, y = 5;
+        int x = 19, y = 9;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
         for (int i = 0; i < size(Menu); i++) {
@@ -538,7 +700,7 @@ void SignInUp(bool isUser) {
             case 1: // Регистрация нового пользователя
                 system("cls");
                 if (isUser)
-                    SignUpUs();
+                    SignUpUs(true);
                 else
                     SignUpDev();
                 return;
@@ -562,7 +724,7 @@ bool validatePassword(const std::string& password) {
     // Проверка длины пароля
     if (password.length() < 8) {
         // Перемещение курсора в консоли и вывод сообщения об ошибке
-        GoToXY(15, 8);
+        GoToXY(13, 11);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать не менее 8 символов.";
         // Скрытие курсора и задержка перед очисткой экрана
@@ -593,7 +755,7 @@ bool validatePassword(const std::string& password) {
         }
         else if (!isascii(c)) {
             // Проверка на кириллические символы
-            GoToXY(15, 8);
+            GoToXY(13, 11);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Пароль не должен содержать кириллических символов.";
             ConsoleCursorVisible(false, 100);
@@ -605,7 +767,7 @@ bool validatePassword(const std::string& password) {
 
     // Проверка наличия пробелов
     if (hasSpace) {
-        GoToXY(15, 8);
+        GoToXY(13, 11);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль не должен содержать пробелов.";
         ConsoleCursorVisible(false, 100);
@@ -616,7 +778,7 @@ bool validatePassword(const std::string& password) {
 
     // Проверка наличия строчных букв
     if (!hasLowercase) {
-        GoToXY(15, 8);
+        GoToXY(13, 11);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну строчную букву.";
         ConsoleCursorVisible(false, 100);
@@ -627,7 +789,7 @@ bool validatePassword(const std::string& password) {
 
     // Проверка наличия прописных букв
     if (!hasUppercase) {
-        GoToXY(15, 8);
+        GoToXY(13, 11);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну заглавную букву.";
         ConsoleCursorVisible(false, 100);
@@ -638,7 +800,7 @@ bool validatePassword(const std::string& password) {
 
     // Проверка наличия цифр
     if (!hasDigit) {
-        GoToXY(15, 8);
+        GoToXY(13, 11);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Пароль должен содержать хотя бы одну цифру.";
         ConsoleCursorVisible(false, 100);
@@ -656,7 +818,7 @@ bool validateLogin(const std::string& login) {
     // Проверка длины логина
     if (login.length() < 6) {
         // Перемещение курсора в консоли и вывод сообщения об ошибке
-        GoToXY(15, 7);
+        GoToXY(13, 9);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Длина логина должна быть не менее 6 символов.\n";
         // Скрытие курсора и задержка перед очисткой экрана
@@ -675,7 +837,7 @@ bool validateLogin(const std::string& login) {
         }
         // Проверка на кириллические символы
         if (!isascii(c)) {
-            GoToXY(15, 7);
+            GoToXY(13, 9);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Логин не должен содержать кириллические символы.\n";
             ConsoleCursorVisible(false, 100);
@@ -686,7 +848,7 @@ bool validateLogin(const std::string& login) {
     }
     // Проверка наличия буквы в логине
     if (!hasLetter) {
-        GoToXY(15, 7);
+        GoToXY(13, 9);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         std::cout << "Логин должен содержать хотя бы одну букву.\n";
         ConsoleCursorVisible(false, 100);
@@ -699,7 +861,7 @@ bool validateLogin(const std::string& login) {
     for (char c : login) {
         // Проверка на пробельный символ
         if (isspace(static_cast<unsigned char>(c))) {
-            GoToXY(15, 7);
+            GoToXY(13, 9);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             std::cout << "Логин не должен содержать пробелы.\n";
             ConsoleCursorVisible(false, 100);
@@ -740,7 +902,7 @@ bool validateGameName(const std::string& name) {
 }
 
 // Функция для регистрации нового пользователя
-void SignUpUs() {
+void SignUpUs(bool isUser) {
     vector<User> users = writingUsers();
     // Отображение курсора в консоли и его видимость
     ConsoleCursorVisible(true, 100);
@@ -751,21 +913,31 @@ void SignUpUs() {
     string signUpRepitPass;
 
     // Координаты для отображения текста в консоли
-    int x = 15, y = 5;
+    int x = 13, y = 5;
     GoToXY(x, y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите данные для регистрации";
+    ++y;
     GoToXY(x, ++y);
 
     // Ввод логина пользователя
-    cout << "login: ";
+    cout << "(Длина: 6-16, мин. 1 буква[aA-zZ])";
+    GoToXY(x, ++y);
+    cout << "Логин: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    getline(cin, signUpLogin);
+    signUpLogin = cinUsDevName();
+    if (signUpLogin == "123456789123456789123456789") {
+        system("cls");
+        SignInUp(isUser);
+
+        return;
+    }
+    //getline(cin, signUpLogin);
 
     // Валидация логина
     if (!validateLogin(signUpLogin)) {
         // Если логин не прошел валидацию, запрашиваем новый логин
-        SignUpUs();
+        SignUpUs(true);
         return;
     }
     User currentUser;
@@ -779,7 +951,7 @@ void SignUpUs() {
             ConsoleCursorVisible(false, 100);
             this_thread::sleep_for(std::chrono::milliseconds(1200));
             system("cls");
-            SignUpUs();
+            SignUpUs(true);
             return;
         }
     }
@@ -788,23 +960,33 @@ void SignUpUs() {
 
     // Ввод пароля пользователя
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "pass: ";
+    cout << "(Длина: 8-18, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+    GoToXY(x, ++y);
+    cout << "Пароль: ";
     char ch;
     while (true) {
         SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Бесконечный цикл для ввода пароля
         signUpPass.clear(); // Очищаем переменную для пароля
-        while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
-            if (ch == '\b') { // Если нажата клавиша Backspace
-                if (!signUpPass.empty()) {
-                    signUpPass.pop_back(); // Удаляем последний символ
-                    cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
-                }
-            }
-            else {
-                signUpPass.push_back(ch); // Добавляем символ в пароль
-                cout << '*'; // Выводим звездочку вместо символа
-            }
+        signUpPass = cinPassword();
+        if (signUpPass == "123456789123456789123456789") {
+            system("cls");
+            SignInUp(isUser);
+
+            return;
         }
+
+        //while ((ch = _getch()) != '\r') { // Чтение символов, пока не будет нажата Enter
+        //    if (ch == '\b') { // Если нажата клавиша Backspace
+        //        if (!signUpPass.empty()) {
+        //            signUpPass.pop_back(); // Удаляем последний символ
+        //            cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
+        //        }
+        //    }
+        //    else {
+        //        signUpPass.push_back(ch); // Добавляем символ в пароль
+        //        cout << '*'; // Выводим звездочку вместо символа
+        //    }
+        //}
         cout << endl;
 
         // Валидация пароля
@@ -815,21 +997,25 @@ void SignUpUs() {
             reppas:
             // Если пароль не прошел валидацию, выводим сообщение и просим ввести заново
             system("cls");
-            x = 15, y = 5;
+            x = 13, y = 5;
             GoToXY(x, y);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "Введите данные для регистрации";
+            ++y;
             GoToXY(x, ++y);
 
             // Ввод логина пользователя
-            cout << "login: "; 
+            cout << "(Длина: 6-16, мин. 1 буква[aA-zZ])";
+            GoToXY(x, ++y);
+            cout << "Логин: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << signUpLogin;
-            GoToXY(x, ++y);
-
-            // Ввод пароля пользователя
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-            cout << "pass: ";
+            GoToXY(x, ++y);
+            cout << "(Длина: 8-18, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+            GoToXY(x, ++y);
+            cout << "Пароль: ";
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         }
     }
 
@@ -837,20 +1023,28 @@ void SignUpUs() {
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     std::cout << "repit pass: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signUpRepitPass.clear(); // Очищаем переменную для повторного ввода пароля
-    while ((ch = _getch()) != '\r') {
-        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
-        if (ch == '\b') { // Если нажата клавиша Backspace
-            if (!signUpRepitPass.empty()) {
-                signUpRepitPass.pop_back(); // Удаляем последний символ
-                cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
-            }
-        }
-        else {
-            signUpRepitPass.push_back(ch); // Добавляем символ в пароль
-            cout << '*'; // Выводим звездочку вместо символа
-        }
+    signUpRepitPass = cinPassword();
+    if (signUpRepitPass == "123456789123456789123456789") {
+        system("cls");
+        SignInUp(isUser);
+
+        return;
     }
+    //while ((ch = _getch()) != '\r') {
+    //    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);// Чтение символов, пока не будет нажата Enter
+    //    if (ch == '\b') { // Если нажата клавиша Backspace
+    //        if (!signUpRepitPass.empty()) {
+    //            signUpRepitPass.pop_back(); // Удаляем последний символ
+    //            cout << "\b \b"; // Выводим пробел и снова символ Backspace для удаления звездочки
+    //        }
+    //    }
+    //    else {
+    //        signUpRepitPass.push_back(ch); // Добавляем символ в пароль
+    //        cout << '*'; // Выводим звездочку вместо символа
+    //    }
+    //}
     cout << endl;
 
     // Проверка соответствия паролей
@@ -1101,24 +1295,47 @@ void SignUpDev() {
 }
 
 void topUp(User currentUser) {
+    ConsoleCursorVisible(true, 100);
     system("cls");
-    int x = 10, y = 5;
-    GoToXY(x, y);
-
     string addBalance;
     string cardNum;
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "Введите сумму, которую хотите добавить";
-    GoToXY(x, ++y);
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    getline(cin, addBalance);
-    GoToXY(x, ++y);
+    
+
+    int x = 10, y = 5;
+    while (true) {
+        x = 10, y = 5;
+        GoToXY(x, y);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        cout << "Введите сумму, которую хотите добавить";
+        GoToXY(x, ++y);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+        addBalance = cinSum();
+        if (addBalance == "e") {
+            UsCabinet(currentUser);
+            return;
+        }
+        //getline(cin, addBalance);
+        float faddBalance = stof(addBalance);
+        GoToXY(x, ++y);
+        if (currentUser.getBalance() + faddBalance > 100000) {
+            cout << "Макс. баланс пользователя: 100000";
+            GoToXY(x, ++y);
+            cout << "Вы можете положить на баланс только " << 100000 - currentUser.getBalance();
+            this_thread::sleep_for(std::chrono::milliseconds(2200));
+            system("cls");
+        }
+        else break;
+    }
 
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "CardNum: ";
     while (true) {
         SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-        getline(cin, cardNum);
+        cardNum = cinCardNum();
+        if (cardNum == "e") {
+            UsCabinet(currentUser);
+            return;
+        }
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         if (!validateCardNumber(cardNum)) {
             // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
@@ -1178,10 +1395,9 @@ void writeOff(Dev currenDev) {
 void UsCabinet(User currentUser) {
     ConsoleCursorVisible(false, 100);
     system("cls");
-    system("mode con cols=49 lines=15");
     
 
-    string Menu[] = { "Пополнить баланс", "Список моих игр", "Поиск игр", "Выход на 1-ое окно", "Выход"};
+    string Menu[] = { "Пополнить баланс в приложении", "Библиотека купленных мной игр", "Библиотека всех игр", "Вернуться на первое окно", "Выйти из приложения"};
     int active_menu = 0;
 
     // Переменная для чтения нажатых клавиш
@@ -1191,10 +1407,10 @@ void UsCabinet(User currentUser) {
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         int x = 3, y = 1;
         GoToXY(3, 1);
-        cout << "Ваше имя: " << currentUser.getLogin();
-        GoToXY(30, 1);
+        cout << "Ваш логин: " << currentUser.getLogin();
+        GoToXY(3, 2);
         cout << "Ваш баланс: " << currentUser.getBalance();
-        x = 15, y = 5;
+        x = 20, y = 8;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
         for (int i = 0; i < size(Menu); i++) {
@@ -1239,11 +1455,11 @@ void UsCabinet(User currentUser) {
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
-                GamesList(writingUseGamesData(currentUser), false, "");
+                GamesList(writingUseGamesData(currentUser), false, "", false);
                 break;;
             case 2: // Вход как разработчик (не реализовано)
                 system("cls");
-                GamesList(writngAllGames(), true, currentUser.getLogin());
+                GamesList(writngAllGames(), true, currentUser.getLogin(), false);
                 break;
             case 3: // Выход из программы
                 system("cls");
@@ -1276,35 +1492,24 @@ void BuyGame(Game game, string UsName) {
     for (int i = 0; i < users.size(); i++) {
         if (users[i].getLogin() == UsName) user = users[i];
     }
-
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     for (int i = 0; i < userGames.size(); i++) {
         if (userGames[i] == game.getName()) {
             system("cls");
+            GoToXY(30, 10);
             cout << "Игра уже куплена";
             this_thread::sleep_for(std::chrono::milliseconds(1200));
             system("cls");
             return;
         }
     }
-    /*ifstream ifUsGames;
-    ifUsGames.open("Data/UserGames/" + UsName + "Games.txt");
-
-    while (!ifUsGames.eof()) {
-        string name;
-
-        getline(ifUsGames, name);
-        if (UsName == name) {
-            cout << "Игра уже куплена";
-            system("cls");
-            ifUsGames.close();
-            return;
-        }
-    }*/
 
     if (user.getBalance() > game.getPrice()) {
         bankRequest();
         user.setBalance(user.getBalance() - game.getPrice());
         system("cls");
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        GoToXY(24, 10);
         cout << "Игра добавлена в вашу библиотеку";
         this_thread::sleep_for(std::chrono::milliseconds(1200));
         system("cls");
@@ -1312,7 +1517,9 @@ void BuyGame(Game game, string UsName) {
     }
     else {
         system("cls");
-        cout << "Хаха лох, недостаточно денег";
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        GoToXY(30, 10);
+        cout << "У вас недостаточно денег";
         this_thread::sleep_for(std::chrono::milliseconds(1200));
         system("cls");
         return;
@@ -1353,11 +1560,12 @@ void PageList(Game game, bool isUser, string UsName) {
     system("cls");
     GoToXY(5, 1);
     cout << game.getName();
-    GoToXY(40, 1);
+    GoToXY(60, 1);
     cout << game.getPrice();
-    BigText(2, 3, 48, game.getAbout());
+    BigText(2, 3, 68, game.getAbout());
     if (isUser) {
-        GoToXY(15, 13);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+        GoToXY(30, 19);
         cout << "Купить";
     }
     
@@ -1379,9 +1587,11 @@ void PageList(Game game, bool isUser, string UsName) {
 
 void FindGame(vector<Game> games, bool isUser, string UsName) {
     vector<Game> filtergames;
-
-    cout << "Введите название игры";
+    GoToXY(2, 7);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+    cout << "Введите название игры: ";
     string name;
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, name);
 
     for (int i = 0; i < games.size(); i++) {
@@ -1390,11 +1600,11 @@ void FindGame(vector<Game> games, bool isUser, string UsName) {
     }
 
     system("cls");
-    GamesList(filtergames, isUser, UsName);
+    GamesList(filtergames, isUser, UsName, true);
     return;
 }
 
-void GamesList(vector<Game> games, bool isUser, string UsName) {
+void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
     
     int x = 5, x1 = 40, y = 1;
 
@@ -1402,16 +1612,22 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
 
     // Переменная для чтения нажатых клавиш
     char ch;
-    int minShowGame = 0, maxShomGame = 10;
+    int minShowGame = 0, maxShomGame = 17;
     if (maxShomGame > games.size()) maxShomGame = games.size();
     while (true) {
-        GoToXY(10, 12);
+        GoToXY(10, 19);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-        cout << "<- Пр. Стр.          Сл. Стр. -> ";
-        GoToXY(10, 13);
-        cout << "Назад(Ecs)        Поиск игр(Space)";
+        cout << "<- Пр. Стр.                              Сл. Стр. -> ";
+        if (!isFind) {
+            GoToXY(19, 20);
+            cout << "Назад(Ecs)        Поиск игр(Space)";
+        }
+        else {
+            GoToXY(30, 20);
+            cout << "Назад(Ecs)";
+        }
         bool isCanNext = true, isCanPrev = true;
-        int x = 5, x1 = 42, y = 1;
+        int x = 5, x1 = 59, y = 1;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
         for (int i = minShowGame; i < maxShomGame; i++) {
@@ -1443,10 +1659,10 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
                 if (active_menu < minShowGame) {
                     system("cls");
                     maxShomGame = active_menu + 1;
-                    if (minShowGame - 10 < 0) {
+                    if (minShowGame - 17 < 0) {
                         minShowGame = 0;
                     }
-                    else minShowGame -= 10;
+                    else minShowGame -= 17;
 
                 }
             }
@@ -1458,42 +1674,42 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
                 if (active_menu > maxShomGame - 1) {
                     system("cls");
                     minShowGame = active_menu;
-                    if (maxShomGame + 10 > games.size())
+                    if (maxShomGame + 17 > games.size())
                         maxShomGame = games.size();
-                    else maxShomGame += 10;
+                    else maxShomGame += 17;
                 }
             }
             break;
         case 77:
             system("cls");
-            if (maxShomGame + 10 > games.size()) {
-                if (minShowGame + 10 < games.size()) {
-                    minShowGame += 10;
-                    if (active_menu + 10 > games.size()) active_menu += games.size() - 1;
-                    else active_menu += 10;
+            if (maxShomGame + 17 > games.size()) {
+                if (minShowGame + 17 < games.size()) {
+                    minShowGame += 17;
+                    if (active_menu + 17 > games.size()) active_menu = games.size() - 1;
+                    else active_menu += 17;
                 }
                
                 maxShomGame = games.size();
             }
             else {
-                active_menu += 10;
-                minShowGame += 10;
-                maxShomGame += 10;
+                active_menu += 17;
+                minShowGame += 17;
+                maxShomGame += 17;
             }
             break;
         case 75:
             system("cls");
-            if (minShowGame - 10 < 0) {
+            if (minShowGame - 17 < 0) {
                 minShowGame = 0;
-                if (maxShomGame - 10 < 0) {
-                    maxShomGame = 10;
+                if (maxShomGame - 17 < 0) {
+                    maxShomGame = 17;
                 }
                 if (maxShomGame > games.size()) maxShomGame = games.size();
             }
             else {
-                active_menu -= 10;
+                active_menu -= 17;
                 maxShomGame = minShowGame;
-                minShowGame -= 10;
+                minShowGame -= 17;
             }
             break;
         case 13: // ENTER - выбор пункта меню
@@ -1507,8 +1723,10 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
             cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
             return;
         case 32:
-            system("cls");
-            FindGame(games, isUser, UsName);
+            if (!isFind) {
+                system("cls");
+                FindGame(games, isUser, UsName);
+            }
             break;
         }
     }
@@ -1528,18 +1746,21 @@ void GamesList(vector<Game> games, bool isUser, string UsName) {
 void addGame(string DevName) {
     system("cls");
     vector<Game> allGames = writngAllGames();
-    int x = 10, y = 2;
+    int x = 3, y = 2;
 
     string name;
     string about;
     string price;
 
     GoToXY(x, y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Название игры: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, name);
 
     if (!validateGameName(name)) {
         GoToXY(x, ++y);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         cout << "Название игры должно быть длиннее 5 символов и содержать хотя бы 1 букву." << endl;
         this_thread::sleep_for(chrono::milliseconds(1200));
         addGame(DevName);
@@ -1548,6 +1769,7 @@ void addGame(string DevName) {
     for (int i = 0; i < allGames.size(); i++) {
         if (name == allGames[i].getName()) {
             GoToXY(x, ++y);
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "Такое название уже занято";
             this_thread::sleep_for(std::chrono::milliseconds(1200));
             addGame(DevName);
@@ -1557,11 +1779,15 @@ void addGame(string DevName) {
     
 
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Цена для игры: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     getline(cin, price);
 
     GoToXY(x, ++y);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Описание игры: ";
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     GoToXY(3, ++y);
     getline(cin, about); //440 символов максимум
 
@@ -1655,7 +1881,7 @@ void DevCabinet(Dev currentDev) {
                 //balance
             case 1: // Вход как пользователь
                 system("cls");
-                GamesList(writingDevGames(currentDev.getLogin()), false, "");
+                GamesList(writingDevGames(currentDev.getLogin()), false, "", false);
                 break;
             case 2: // Вход как разработчик (не реализовано)
                 //system("cls");
@@ -1685,20 +1911,19 @@ void DevCabinet(Dev currentDev) {
 
 
 void AboutApp() {
-    cout << "Синие текст -- это просто текст\nКрасный текст -- это кнопки между которыми можно переключаться с помощью стрелок вверх-вниз\nЗеленый -- ввод значений с клавиатуры";
+    cout << "Синие текст -- это просто текст\nКрасный текст -- это кнопки между которыми можно переключаться с помощью стрелок вверх-вниз. Если текст подсвечен розовым(светло-красным), то можно нажать enter и выполнится розовое действие\nЗеленый -- ввод значений с клавиатуры";
     _getch();
     system("cls");
 }
 // Первое окно программы
 void firstWin() {
     // Устанавливает размер окна консоли
-    system("mode con cols=49 lines=15");
-    //AboutApp();
+    system("mode con cols=70 lines=22");
     // Отключает видимость курсора в консоли
     ConsoleCursorVisible(false, 100);
 
     // Массив пунктов меню
-    string Menu[] = { "Войти как", "User", "Developer", "Выход" };
+    string Menu[] = { "Выберите действие", "Войти как игрок(покупатель)", "Войти как издатель игр(продавец)", "Выход из программы" };
 
     // Переменная для отслеживания активного пункта меню
     int active_menu = 1;
@@ -1709,11 +1934,11 @@ void firstWin() {
     bool isUser;
 
     // Бесконечный цикл для отображения меню и обработки ввода пользователя
-    GoToXY(15, 5);
+    GoToXY(19, 8);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << Menu[0];
     while (true) {
-        int x = 15, y = 6;
+        int x = 19, y = 10;
         GoToXY(x, y);
         // Цикл для отображения пунктов меню
         for (int i = 1; i < size(Menu); i++) {

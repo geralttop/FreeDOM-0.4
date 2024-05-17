@@ -6,7 +6,7 @@ class Dev : public Human
 private:
 	string cardNum;
 public:
-	Dev(string log, string p, float bal, string cNum, int index);
+	Dev(string log, string p, double bal, string cNum, int index);
 	Dev();
 
 	string getCardNum() {
