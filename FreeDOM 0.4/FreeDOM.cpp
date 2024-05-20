@@ -23,7 +23,7 @@ int main()
     // Нормально отображение кириллицы
     //setlocale(LC_NUMERIC, "С"); // Чтоб не округляло числа из файла
 
-    SetConsoleTitle(L"FreeDOM"); //Задает название консоли
+    //SetConsoleTitle(L"FreeDOM"); //Задает название консоли
     
     HWND consoleWindow = GetConsoleWindow();
     SetWindowLongPtr(consoleWindow, GWL_STYLE, GetWindowLongPtr(consoleWindow, GWL_STYLE) & ~WS_THICKFRAME);
