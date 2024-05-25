@@ -342,7 +342,7 @@ bool Quit() {
         cout << "Да(y)         Нет(n)";
         char c = _getch();
         system("cls");
-        if (c == 'y' || c == 'y') {
+        if (c == 'y' || c == 'Y') {
             return true;
         }
         else if (c == 'n' || c == 'N')
