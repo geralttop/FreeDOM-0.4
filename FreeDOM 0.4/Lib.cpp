@@ -28,7 +28,7 @@ string cinSum() {
                 return "e";
             }
             else if (ch == '\r') {
-                if (data.size() > 0)
+                if (data.size() > 0 && stof(data) != 0)
                     break;
             }
             else if (ch == '\b') {
@@ -53,6 +53,8 @@ string cinSum() {
                             continue;
                         }
                     }
+                    if (stof(data + ch) > 100000) continue;
+                    if ((data == "0") && ch != '.' || data == "0.0" && ch == '0') continue;
                     data += ch;
                     cout << ch;
                 }
@@ -113,7 +115,7 @@ string cinUsDevName() {
                     cout << "\b \b";
                 }
             }
-            else {
+            else if (isalpha(ch) || isdigit(ch) || ch == ' ') {
                 if (data.size() < 24) {
                     data += ch;
                     cout << ch;
@@ -151,6 +153,42 @@ string cinCardNum() {
                     cout << ch;
                     if (data.size() % 4 == 0 and data.size() != 16)
                         cout << "-";
+                }
+            }
+        }
+    }
+    cout << "\n";
+    return data;
+}
+
+string cinGameNameOrDesc(bool isName) {
+    int size;
+    if (isName) {
+        size = 40;
+    }
+    else size = 440;
+    string data;
+    char ch;
+    while (true) {
+        if (_kbhit()) {
+            ch = _getch();
+            if (ch == 27) {
+                return "<";
+            }
+            else if (ch == '\r') {
+                if (data.size() > 0)
+                    break;
+            }
+            else if (ch == '\b') {
+                if (!data.empty()) {
+                    data.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (ch != '<') {
+                if (data.size() < size) {
+                    data += ch;
+                    cout << ch;
                 }
             }
         }
@@ -215,7 +253,8 @@ vector<Dev> writingDevs() {
     return devs;
 }
 
-vector<Game> writingDevGames(string devName) {
+vector<Game> writingDevGames(string devName)
+{
     vector<Game> devGames;
     string pathAbout = "Data/DevGames/About/" + devName + "About.txt";
     string pathName = "Data/DevGames/" + devName + "Games.txt";
@@ -234,6 +273,9 @@ vector<Game> writingDevGames(string devName) {
         getline(ifName, name);
         getline(ifAbout, about);
         getline(ifPrice, price);
+        if (name == "") {
+            return devGames;
+        }
         if (price == "") price = "0";
         float fprice = stof(price);
         devGames.push_back(Game(name, about, fprice, i, devName));
@@ -287,6 +329,25 @@ HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void GoToXY(short x, short y) {
     SetConsoleCursorPosition(hStdOut, { x, y });
+}
+
+bool Quit() {
+   
+    system("cls");
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+    while (true) {
+        GoToXY(25, 9);
+        cout << "Подтвердите действия";
+        GoToXY(25, 10);
+        cout << "Да(y)         Нет(n)";
+        char c = _getch();
+        system("cls");
+        if (c == 'y' || c == 'y') {
+            return true;
+        }
+        else if (c == 'n' || c == 'N')
+            return false;
+    }
 }
 
 void ConsoleCursorVisible(bool show, short size) {
@@ -434,6 +495,7 @@ void bankRequest() {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(14, 7);
+    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Банк одобрил операцию";
     this_thread::sleep_for(std::chrono::milliseconds(1200));
     system("cls");
@@ -463,7 +525,7 @@ void SignInUs(bool isUser) {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите логин и пароль";
     GoToXY(x, ++y);
-    cout << "login: ";
+    cout << "Логин: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signInLogin = cinUsDevName();
     if (signInLogin == "123456789123456789123456789") {
@@ -473,7 +535,7 @@ void SignInUs(bool isUser) {
     }
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "pass: ";
+    cout << "Пароль: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signInPass = cinPassword();
     if (signInPass == "123456789123456789123456789") {
@@ -519,6 +581,7 @@ void SignInUs(bool isUser) {
         }
     }
     GoToXY(x, ++y);
+    ConsoleCursorVisible(false, 100);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введен неправильный пароль или логин\n";
     this_thread::sleep_for(std::chrono::milliseconds(1200));
@@ -528,6 +591,7 @@ void SignInUs(bool isUser) {
 }
 
 void SignInUp(bool isUser) {
+    system("cls");
     ConsoleCursorVisible(false, 100);
     vector<string> Menu = { "Войти в свой аккаунт", "Создать новый аккаунт", "Вернуться назад, на первое окно", "Выход из программы" };
     int active_menu = 0;
@@ -550,7 +614,7 @@ void SignInUp(bool isUser) {
         if (ch == -32) ch = _getch();
         switch (ch) {
         case 27:
-            exit(0);
+            break;
         case 72:
             if (active_menu == 0) {
                 active_menu = Menu.size() - 1;
@@ -750,7 +814,7 @@ void SignUpUs(bool isUser) {
     cout << "Введите данные для регистрации";
     ++y;
     GoToXY(x, ++y);
-    cout << "(Длина: 6-16, мин. 1 буква[aA-zZ])";
+    cout << "(Длина: 6-24, мин. 1 буква[aA-zZ])";
     GoToXY(x, ++y);
     cout << "Логин: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
@@ -758,6 +822,11 @@ void SignUpUs(bool isUser) {
     if (signUpLogin == "123456789123456789123456789") {
         system("cls");
         SignInUp(isUser);
+        return;
+    }
+    if (!validateLogin(signUpLogin)) {
+        system("cls");
+        SignUpUs(true);
         return;
     }
     User currentUser;
@@ -775,7 +844,7 @@ void SignUpUs(bool isUser) {
     }
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "(Длина: 8-18, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+    cout << "(Длина: 8-24, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
     GoToXY(x, ++y);
     cout << "Пароль: ";
     char ch;
@@ -801,14 +870,14 @@ void SignUpUs(bool isUser) {
             cout << "Введите данные для регистрации";
             ++y;
             GoToXY(x, ++y);
-            cout << "(Длина: 6-16, мин. 1 буква[aA-zZ])";
+            cout << "(Длина: 6-24, мин. 1 буква[aA-zZ])";
             GoToXY(x, ++y);
             cout << "Логин: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << signUpLogin;
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             GoToXY(x, ++y);
-            cout << "(Длина: 8-18, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+            cout << "(Длина: 8-24, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
             GoToXY(x, ++y);
             cout << "Пароль: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
@@ -816,7 +885,7 @@ void SignUpUs(bool isUser) {
     }
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    std::cout << "repit pass: ";
+    std::cout << "Повт пароль: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signUpRepitPass.clear();
     signUpRepitPass = cinPassword();
@@ -865,10 +934,17 @@ void SignUpDev() {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Введите данные для регистрации";
     GoToXY(x, ++y);
-    cout << "login: ";
+    cout << "(Длина: 6-24, мин. 1 буква[aA-zZ])";
+    GoToXY(x, ++y);
+    cout << "Логин: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signUpLogin = cinUsDevName();
+    if (signUpLogin == "123456789123456789123456789") {
+        SignInUp(false);
+        return;
+    }
     if (!validateLogin(signUpLogin)) {
+        system("cls");
         SignUpDev();
         return;
     }
@@ -890,6 +966,10 @@ void SignUpDev() {
     while (true) {
         SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         signDevCardNum = cinCardNum();
+        if (signDevCardNum == "e") {
+            SignInUp(false);
+            return;
+        }
         if (!validateCardNumber(signDevCardNum)) {
             // Если номер карты не прошел валидацию, выводим сообщение и запрашиваем новый номер
             GoToXY(x, ++y);
@@ -905,7 +985,7 @@ void SignUpDev() {
 
             // Ввод логина пользователя
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-            cout << "login: ";
+            cout << "Логин: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << signUpLogin;
             GoToXY(x, ++y);
@@ -918,12 +998,18 @@ void SignUpDev() {
     }
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "pass: ";
+    cout << "(Длина: 8-24, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+    GoToXY(x, ++y);
+    cout << "Пароль: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     char ch;
     while (true) {
         signUpPass.clear();
         signUpPass = cinPassword();
+        if (signUpPass == "123456789123456789123456789") {
+            SignInUp(false);
+            return;
+        }
         cout << endl;
         if (validatePassword(signUpPass)) {
             break;
@@ -937,7 +1023,9 @@ void SignUpDev() {
             cout << "Введите данные для регистрации";
             GoToXY(x, ++y);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-            cout << "login: ";
+            cout << "(Длина: 6-24, мин. 1 буква[aA-zZ])";
+            GoToXY(x, ++y);
+            cout << "Логин: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << signUpLogin;
             GoToXY(x, ++y);
@@ -951,15 +1039,22 @@ void SignUpDev() {
             }
             GoToXY(x, ++y);
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-            cout << "pass: ";
+            cout << "(Длина: 8-24, 1 буква[A-Z], 1 буква[a-z], 1 цифра[0-9]";
+            GoToXY(x, ++y);
+            cout << "Пароль: ";
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
         }
     }
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    std::cout << "repit pass: ";
+    std::cout << "Повт. пароль: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     signUpRepitPass.clear();
     signUpRepitPass = cinPassword();
+    if (signUpRepitPass == "123456789123456789123456789") {
+        SignInUp(false);
+        return;
+    }
     cout << endl;
     if (signUpPass != signUpRepitPass) {
         GoToXY(x, ++y);
@@ -994,7 +1089,7 @@ void SignUpDev() {
     ofDevGames.close();
     ofGamesAbout.close();
     ofGamesPrice.close();
-    DevCabinet(devs[devs.size() - 1]);
+    DevCabinet(writingDevs()[devs.size()]);
 }
 
 void topUp(User currentUser) {
@@ -1018,6 +1113,7 @@ void topUp(User currentUser) {
         float faddBalance = stof(addBalance);
         GoToXY(x, ++y);
         if (currentUser.getBalance() + faddBalance > 100000) {
+            SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
             cout << "Макс. баланс пользователя: 100000";
             GoToXY(x, ++y);
             cout << "Вы можете положить на баланс только " << 100000 - currentUser.getBalance();
@@ -1119,7 +1215,7 @@ void UsCabinet(User currentUser) {
         if (ch == -32) ch = _getch();
         switch (ch) {
         case 27:
-            exit(0);
+            break;
         case 72:
             if (active_menu == 0) {
                 active_menu = Menu.size() - 1;
@@ -1144,26 +1240,30 @@ void UsCabinet(User currentUser) {
             case 1:
                 system("cls");
                 GamesList(writingUseGamesData(currentUser), false, "", false);
+                ConsoleCursorVisible(false, 100);
                 break;
             case 2:
                 system("cls");
                 GamesList(writngAllGames(), true, currentUser.getLogin(), false);
+                ConsoleCursorVisible(false, 100);
                 break;
             case 3:
                 system("cls");
-                firstWin();
-                return;
+                if (Quit() == true) {
+                    firstWin();
+                    return;
+                }
+                break;
+                
             case 4:
-                exit(0);
-                return;
+                if (Quit() == true) {
+                    exit(0);
+                    return;
+                }
+                break;
+
             }
             break;
-        case 32:
-            system("cls");
-            _getch();
-            system("cls");
-            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
-            return;
         }
     }
     _getch();
@@ -1192,7 +1292,7 @@ void BuyGame(Game game, string UsName) {
     }
 
     if (user.getBalance() > game.getPrice()) {
-        bankRequest();
+        //bankRequest();
         user.setBalance(user.getBalance() - game.getPrice());
         system("cls");
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
@@ -1233,8 +1333,7 @@ void BuyGame(Game game, string UsName) {
         ofUsBalance << endl << users[i].getBalance();
     }
     ofUsBalance.close();
-    //bankRequest();
-
+    
 
 
     system("cls");
@@ -1248,12 +1347,17 @@ void PageList(Game game, bool isUser, string UsName) {
     GoToXY(5, 1);
     cout << game.getName();
     GoToXY(60, 1);
-    cout << game.getPrice();
+    cout << game.getPrice() << "$";
     BigText(2, 3, 68, game.getAbout());
     if (isUser) {
-        SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+        GoToXY(20, 19);
+        cout << "Купить(Enter)             Назад(esc)";
+    }
+    else {
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
         GoToXY(30, 19);
-        cout << "Купить";
+        cout << "Назад(esc)";
     }
     
     /*GoToXY(5, 2);
@@ -1276,10 +1380,16 @@ void FindGame(vector<Game> games, bool isUser, string UsName) {
     vector<Game> filtergames;
     GoToXY(2, 7);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+    ConsoleCursorVisible(true, 100);
     cout << "Введите название игры: ";
     string name;
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    getline(cin, name);
+    name = cinGameNameOrDesc(true);
+    if (name == "<") {
+        system("cls");
+        return;
+
+    }
 
     for (int i = 0; i < games.size(); i++) {
         size_t found = games[i].getName().find(name);
@@ -1287,11 +1397,31 @@ void FindGame(vector<Game> games, bool isUser, string UsName) {
     }
 
     system("cls");
+    if (filtergames.size() == 0) {
+        GoToXY(4, 7);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        ConsoleCursorVisible(false, 100);
+        cout << "Игр с такими параметрами не найдено";
+        this_thread::sleep_for(std::chrono::milliseconds(2200));
+        system("cls");
+        FindGame(games, isUser, UsName);
+
+        return;
+    }
+    ConsoleCursorVisible(false, 100);
     GamesList(filtergames, isUser, UsName, true);
     return;
 }
 
 void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
+    ConsoleCursorVisible(false, 100);
+    if (!isFind && games.size() == 0) {
+        GoToXY(20, 8);
+        SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+        cout << "У вас нет игр пока что";
+        this_thread::sleep_for(std::chrono::milliseconds(2200));
+        return;
+    }
     int x = 5, x1 = 40, y = 1;
     int active_menu = 0;
     char ch;
@@ -1300,7 +1430,7 @@ void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
     while (true) {
         GoToXY(10, 19);
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-        cout << "<- Пр. Стр.                              Сл. Стр. -> ";
+        cout << "Пр. Стр.(<-)                              Сл. Стр.(->)";
         if (!isFind) {
             GoToXY(19, 20);
             cout << "Назад(Ecs)        Поиск игр(Space)";
@@ -1309,7 +1439,7 @@ void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
             GoToXY(30, 20);
             cout << "Назад(Ecs)";
         }
-        int x = 5, x1 = 59, y = 1;
+        int x = 5, x1 = 57, y = 1;
         GoToXY(x, y);
         for (int i = minShowGame; i < maxShomGame; i++) {
             if (i == active_menu) {
@@ -1322,7 +1452,7 @@ void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
             cout << games[i].getName() << endl;
             y--;
             GoToXY(x1, y++);
-            cout << games[i].getPrice();
+            cout << games[i].getPrice() << "$";
         }
         ch = _getch();
         if (ch == -32) ch = _getch();
@@ -1388,17 +1518,13 @@ void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
             break;
         case 13:
             PageList(games[active_menu], isUser, UsName);
-            return;
-        case 70:
-            system("cls");
-            _getch();
-            system("cls");
-            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
-            return;
+            ConsoleCursorVisible(false, 100);
+            break;
         case 32:
             if (!isFind) {
                 system("cls");
                 FindGame(games, isUser, UsName);
+                ConsoleCursorVisible(false, 100);
             }
             break;
         }
@@ -1419,7 +1545,12 @@ void addGame(string DevName) {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Название игры: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    getline(cin, name);
+    ConsoleCursorVisible(true, 100);
+    name = cinGameNameOrDesc(true);
+    if (name == "<") {
+        system("cls");
+        return;
+    }
 
     if (!validateGameName(name)) {
         GoToXY(x, ++y);
@@ -1445,14 +1576,25 @@ void addGame(string DevName) {
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Цена для игры: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    getline(cin, price);
+    ConsoleCursorVisible(true, 100);
+    price = cinSum();
+    if (price == "e") {
+        system("cls");
+        return;
+    }
 
     GoToXY(x, ++y);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
     cout << "Описание игры: ";
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    GoToXY(3, ++y);
-    getline(cin, about); //440 символов максимум
+    ConsoleCursorVisible(true, 100);
+    //GoToXY(3, ++y);
+    about = cinGameNameOrDesc(false);
+    if (about == ">") {
+        return;
+        system("cls");
+    }
+       //440 символов максимум
 
     ofstream ofGameName;
     ofstream ofAboutGame;
@@ -1462,7 +1604,7 @@ void addGame(string DevName) {
     ofAboutGame.open("Data/DevGames/About/" + DevName + "About.txt", ofstream::app);
     ofPriceGame.open("Data/DevGames/Price/" + DevName + "Price.txt", ofstream::app);
     
-    if (writingDevGames(DevName)[0].getName() == "") {
+    if (writingDevGames(DevName).size() == 0) {
         ofGameName << name;
         ofAboutGame << about;
         ofPriceGame << price;
@@ -1486,7 +1628,7 @@ void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
 
-    vector<string> Menu = { "Списать деньги на карту", "Список моих игр", "Добавить игру", "Выход на 1-ое окно", "Выход" };
+    vector<string> Menu = { "Списать деньги на карту", "Список, разработанных вами, игр", "Добавить новую игру", "Выход на 1-ое окно", "Выход из приложения" };
     int active_menu = 0;
 
     char ch;
@@ -1494,10 +1636,10 @@ void DevCabinet(Dev currentDev) {
     while (true) {
         SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
         GoToXY(3, 1);
-        cout << "Ваша назва: " << currentDev.getLogin();
-        GoToXY(30, 1);
+        cout << "Ваше название: " << currentDev.getLogin();
+        GoToXY(45, 1);
         cout << "Ваш баланс: " << currentDev.getBalance();
-        int x = 15, y = 5;
+        int x = 20, y = 8;
         GoToXY(x, y);
         for (int i = 0; i < Menu.size(); i++) {
             if (i == active_menu) {
@@ -1513,7 +1655,7 @@ void DevCabinet(Dev currentDev) {
         if (ch == -32) ch = _getch();
         switch (ch) {
         case 27:
-            exit(0);
+            break;
         case 72:
             if (active_menu == 0) {
                 active_menu = Menu.size() - 1;
@@ -1533,23 +1675,34 @@ void DevCabinet(Dev currentDev) {
         case 13:
             switch (active_menu) {
             case 0:
-                bankRequest();
-                writeOff(currentDev);
-                return;
+                if (currentDev.getBalance() > 0) {
+                    bankRequest();
+                    writeOff(currentDev);
+                    return;
+                }
+                break;
             case 1:
                 system("cls");
                 GamesList(writingDevGames(currentDev.getLogin()), false, "", false);
                 break;
             case 2:
                 addGame(currentDev.getLogin());
+                ConsoleCursorVisible(false, 100);
                 break;
             case 3:
                 system("cls");
-                firstWin();
-                return;
+                if (Quit() == true) {
+                    firstWin();
+                    return;
+                }
+                break;
+
             case 4:
-                exit(0);
-                return;
+                if (Quit() == true) {
+                    exit(0);
+                    return;
+                }
+                break;
             }
             break;
         case 32:
@@ -1602,7 +1755,7 @@ void firstWin() {
         if (ch == -32) ch = _getch();
         switch (ch) {
         case 27:
-            exit(0);
+            break;
         case 72:
             if (active_menu == 1) {
                 active_menu = Menu.size() - 1;
@@ -1636,13 +1789,7 @@ void firstWin() {
                 break;
             }
             break;
-        case 32:
-            system("cls");
-            cout << "Какой же Кодзима гений";
-            _getch();
-            system("cls");
-            cout << " Ну и расскажу анекдот: Занимется сексом отец с сыном, и спрашивает его: 'Рад, что мать сдохла?'";
-            return;
+        
         }
     }
 }
