@@ -985,6 +985,8 @@ void SignUpDev() {
 
             // Ввод логина пользователя
             SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
+            cout << "(Длина: 6-24, мин. 1 буква[aA-zZ])";
+            GoToXY(x, ++y);
             cout << "Логин: ";
             SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
             cout << signUpLogin;
@@ -1333,8 +1335,21 @@ void BuyGame(Game game, string UsName) {
         ofUsBalance << endl << users[i].getBalance();
     }
     ofUsBalance.close();
-    
-
+    vector<Dev> devs = writingDevs();
+    ofstream ofDevBalance;
+    ofDevBalance.open("Data/devBalances.txt");
+    for (int i = 0; i < devs.size(); i++) {
+        if (i != 0) {
+            ofDevBalance << "\n";
+        }
+        if (devs[i].getLogin() == game.getDevName()) {
+            ofDevBalance << devs[i].getBalance() + 0.9 * game.getPrice();
+        }
+        else {
+            ofDevBalance << devs[i].getBalance();
+        }
+    }
+    ofDevBalance.close();
 
     system("cls");
     UsCabinet(user);
