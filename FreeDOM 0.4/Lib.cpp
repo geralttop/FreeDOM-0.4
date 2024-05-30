@@ -362,141 +362,50 @@ void ConsoleCursorVisible(bool show, short size) {
 }
 
 void bankRequest() {
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    ConsoleCursorVisible(false, 100);
+    const int width = 70;
+    const int height = 22;
+    const int barWidth = 50;
+    const int barHeight = 3;
+    const int barStartX = (width - barWidth) / 2;
+    const int barStartY = (height - barHeight) / 2;
+
+    // Очистка экрана
     system("cls");
-    GoToXY(15, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
 
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
+    // Вывод рамки
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            if (x == 0 || x == width - 1 || y == 0 || y == height - 1) {
+                GoToXY(x, y);
+                std::cout << "#";
+            }
+        }
+    }
+
+    // Вывод загрузки
+    for (int i = 0; i <= barWidth; ++i) {
+        GoToXY(barStartX, barStartY + 1);
+        std::cout << "Loading: " << i << "%";
+
+        // Вывод прогресса
+        for (int j = 0; j < i; ++j) {
+            GoToXY(barStartX + j, barStartY + 2);
+            std::cout << "=";
+        }
+
+        // Задержка для создания анимации
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+
+    // Очистка экрана после загрузки
     system("cls");
-    GoToXY(18, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    system("cls");
-    GoToXY(21, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(24, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    system("cls");
-    GoToXY(27, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    GoToXY(30, 1);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    system("cls");
-    GoToXY(33, 2);
-    cout << "|";
-    GoToXY(33, 3);
-    cout << "|";
-    GoToXY(33, 4);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(33, 5);
-    cout << "|";
-    GoToXY(33, 6);
-    cout << "|";
-    GoToXY(33, 7);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    system("cls");
-    GoToXY(33, 8);
-    cout << "|";
-    GoToXY(33, 9);
-    cout << "|";
-    GoToXY(33, 10);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    GoToXY(30, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    system("cls");
-    GoToXY(27, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(24, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    system("cls");
-    GoToXY(21, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(18, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
-    GoToXY(15, 11);
-    cout << "___";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(15, 10);
-    cout << "|";
-    GoToXY(15, 9);
-    cout << "|";
-    GoToXY(15, 8);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    system("cls");
-    GoToXY(15, 7);
-    cout << "|";
-    GoToXY(15, 6);
-    cout << "|";
-    GoToXY(15, 5);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
-
-    SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
-    system("cls");
-    GoToXY(15, 4);
-    cout << "|";
-    GoToXY(15, 3);
-    cout << "|";
-    GoToXY(15, 2);
-    cout << "|";
-    this_thread::sleep_for(std::chrono::milliseconds(200));
 
     SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
     system("cls");
     GoToXY(14, 7);
     SetConsoleTextAttribute(hStdOut, FOREGROUND_BLUE);
-    cout << "Банк одобрил операцию";
+    GoToXY((width - 25) / 2, (height - 2) / 2);
+    std::cout << "Банк одобрил операцию";
     this_thread::sleep_for(std::chrono::milliseconds(1200));
     system("cls");
 }

@@ -1,20 +1,20 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Release\) содержит файлы, которые используются совместно с другим проектом (FreeDOM 0.4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Release\) содержит файлы, которые используются совместно с другим проектом (FreeDOM 0.4.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   Lib.cpp
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(631,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(928,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(869,10): warning C4101: ch: неиспользованная локальная переменная
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1034,10): warning C4101: ch: неиспользованная локальная переменная
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1260,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1485,61): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1539,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1549,85): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1552,41): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1567,73): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1724,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\FreeDOM 0.4\Lib.cpp(1828,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(540,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(837,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(778,10): warning C4101: ch: неиспользованная локальная переменная
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(943,10): warning C4101: ch: неиспользованная локальная переменная
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1169,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1394,61): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1448,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1458,85): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1461,41): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1476,73): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1633,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\FreeDOM 0.4\Lib.cpp(1737,43): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   Создание кода
-  6 of 1239 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  0 of 1239 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
-  FreeDOM 0.4.vcxproj -> C:\Users\виктор\OneDrive\Документы\супер проекты\i love cocks\2024\c++\FreeDOM-0.4\x64\Release\FreeDOM.exe
+  FreeDOM 0.4.vcxproj -> C:\Users\bluev\OneDrive\Документы\super projects\i love cocks\2024\c++\FreeDOM 0.4\x64\Release\FreeDOM.exe
