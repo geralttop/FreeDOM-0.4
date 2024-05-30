@@ -16,20 +16,13 @@ using namespace std;
 
 int main()
 {
-    //Тестовые изменения
-    // Чтоб нормально введеную кириллицу считывало
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    // Нормально отображение кириллицы
-    //setlocale(LC_NUMERIC, "С"); // Чтоб не округляло числа из файла
-
-    //SetConsoleTitle(L"FreeDOM"); //Задает название консоли
-    
+   
     HWND consoleWindow = GetConsoleWindow();
     SetWindowLongPtr(consoleWindow, GWL_STYLE, GetWindowLongPtr(consoleWindow, GWL_STYLE) & ~WS_THICKFRAME);
     SetWindowLongPtr(consoleWindow, GWL_STYLE, GetWindowLongPtr(consoleWindow, GWL_STYLE) & ~WS_MAXIMIZEBOX);
     SetWindowPos(consoleWindow, NULL, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
-    //cinSum();
     system("mode con cols=70 lines=22");
     AboutApp();
     firstWin(); // Запускает первое окно программы

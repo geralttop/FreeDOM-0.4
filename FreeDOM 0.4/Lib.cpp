@@ -605,7 +605,7 @@ void SignInUp(bool isUser) {
         GoToXY(x, y);
         for (int i = 0; i < Menu.size(); i++) {
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_RED);
             }
             else {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
@@ -1235,7 +1235,7 @@ void UsCabinet(User currentUser) {
         GoToXY(x, y);
         for (int i = 0; i < Menu.size(); i++) {
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_RED);
             }
             else {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
@@ -1499,7 +1499,7 @@ void GamesList(vector<Game> games, bool isUser, string UsName, bool isFind) {
         GoToXY(x, y);
         for (int i = minShowGame; i < maxShomGame; i++) {
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_RED);
             }
             else {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
@@ -1684,7 +1684,7 @@ void DevCabinet(Dev currentDev) {
     ConsoleCursorVisible(false, 100);
     system("cls");
 
-    vector<string> Menu = { "Списать деньги на карту", "Список, разработанных вами, игр", "Добавить новую игру", "Выход на 1-ое окно(esc)", "Выход из приложения(BS)" };
+    vector<string> Menu = { "Списать деньги на карту", "Список разработанных вами игр", "Добавить новую игру", "Выход на 1-ое окно(esc)", "Выход из приложения(BS)" };
     int active_menu = 0;
 
     char ch;
@@ -1699,7 +1699,7 @@ void DevCabinet(Dev currentDev) {
         GoToXY(x, y);
         for (int i = 0; i < Menu.size(); i++) {
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_RED);
             }
             else {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
@@ -1781,7 +1781,7 @@ void DevCabinet(Dev currentDev) {
 }
 
 void AboutApp() {
-    cout << "Синие текст -- это просто текст\nКрасный текст -- это кнопки между которыми можно переключаться с помощью стрелок вверх-вниз. Если текст подсвечен розовым(светло-красным), то можно нажать enter и выполнится розовое действие\nЗеленый -- ввод значений с клавиатуры";
+    cout << "Синие текст -- это просто текст\nКрасный текст -- это кнопки между которыми можно переключаться с помощью стрелок вверх-вниз. Если текст подсвечен желтым, то можно нажать enter и выполнится желтое действие\nЗеленый -- ввод значений с клавиатуры";
     _getch();
     system("cls");
 }
@@ -1806,7 +1806,7 @@ void firstWin() {
         GoToXY(x, y);
         for (int i = 1; i < Menu.size(); i++) {
             if (i == active_menu) {
-                SetConsoleTextAttribute(hStdOut, FOREGROUND_RED | FOREGROUND_INTENSITY);
+                SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_RED);
             }
             else {
                 SetConsoleTextAttribute(hStdOut, FOREGROUND_RED);
